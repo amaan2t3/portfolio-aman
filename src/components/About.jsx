@@ -13,13 +13,13 @@ const About = () => {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold mb-10 flex items-center gap-4">
             <span className="text-brand-500">01.</span> About Me
             <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6 text-slate-300 fluid-p leading-relaxed">
               <p>
                 Hello! My name is <span className="text-brand-500 font-medium">Amanullah</span> and I enjoy creating things that live on the internet. My interest in web development started back when I was exploring how interactive websites were built, which led me down the path of becoming a full-stack developer.
               </p>

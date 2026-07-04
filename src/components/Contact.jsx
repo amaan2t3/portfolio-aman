@@ -37,16 +37,16 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
             <span className="text-brand-500">07.</span> Get In Touch
             <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
-              <h3 className="text-2xl font-semibold text-white mb-6">Let's talk about everything!</h3>
-              <p className="text-slate-400 mb-8 leading-relaxed">
+              <h3 className="fluid-h3 font-semibold text-white mb-6">Let's talk about everything!</h3>
+              <p className="fluid-p text-slate-400 mb-8 leading-relaxed">
                 I'm currently looking for new opportunities, and my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
               </p>
 

@@ -34,14 +34,14 @@ const Experience = () => {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-16 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-white mb-16 flex items-center gap-4">
             <span className="text-brand-500">03.</span> Work Experience
             <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
           </h2>
 
           <div className="relative">
-            {/* Center Timeline Line */}
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-slate-700"></div>
+            {/* Center/Left Timeline Line */}
+            <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-slate-700"></div>
 
             <div className="space-y-12">
               {experienceData.map((item, idx) => (
@@ -58,12 +58,12 @@ const Experience = () => {
                   <div className="hidden md:block w-[45%]"></div>
 
                   {/* Timeline Dot */}
-                  <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 bg-slate-900 border-2 border-brand-500 rounded-full p-2 z-10 shadow-[0_0_10px_rgba(16,185,129,0.5)]">
+                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 bg-slate-900 border-2 border-brand-500 rounded-full p-2 z-10 shadow-[0_0_10px_rgba(16,185,129,0.5)]">
                     <Briefcase className="text-brand-500" size={20} />
                   </div>
 
                   {/* Content Card */}
-                  <div className={`w-full md:w-[45%] pl-10 md:pl-0 ${item.side === 'left' ? 'md:pr-10 md:text-right' : 'md:pl-10'
+                  <div className={`w-full md:w-[45%] pl-14 sm:pl-16 md:pl-0 ${item.side === 'left' ? 'md:pr-10 md:text-right' : 'md:pl-10'
                     }`}>
                     <div className="glass-card p-6 border-b-4 border-b-brand-500 relative group overflow-hidden">
                       <div className="absolute inset-0 bg-brand-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>

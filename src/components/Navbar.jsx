@@ -68,7 +68,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-12">
-          <NavLink to="/" className="text-2xl font-bold text-white tracking-tighter flex items-center gap-2">
+          <NavLink to="/" className="text-xl md:text-2xl font-bold text-white tracking-tighter flex items-center gap-1 md:gap-2">
             <span className="font-mono text-brand-500">{"</>"}</span> Aman<span className="text-brand-500">{"</>"}</span>
           </NavLink>
 
@@ -134,7 +134,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-slate-300 hover:text-brand-500"
+          className="md:hidden text-slate-300 hover:text-brand-500 p-2 -mr-2"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}

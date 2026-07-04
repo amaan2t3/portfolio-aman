@@ -62,12 +62,12 @@ const Projects = () => {
         transition={{ duration: 0.6 }}
         className="max-w-5xl mx-auto"
       >
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-4">
+        <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
           <span className="text-brand-500">04.</span> Featured Projects
           <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
         </h2>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
@@ -95,7 +95,7 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-4 mt-auto pt-4 border-t border-white/5">
+                <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-white/5">
                   <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-400 hover:text-brand-500 transition-colors bg-white/5 px-4 py-2 rounded-lg border border-white/5 hover:border-brand-500/30">
                     <FaGithub size={16} /> Code
                   </a>

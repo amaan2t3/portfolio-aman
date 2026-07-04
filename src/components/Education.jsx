@@ -49,7 +49,7 @@ const Education = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
             <span className="text-brand-500">05.</span> Education & Certifications
             <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
           </h2>

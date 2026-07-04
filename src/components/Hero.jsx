@@ -60,7 +60,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter"
+            className="fluid-h1 font-extrabold mb-4 md:mb-6 tracking-tighter"
           >
             Hi, I'm <span className="hero-gradient-text">Amanullah Ibrahim</span>
           </motion.h1>
@@ -69,7 +69,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-3xl md:text-5xl text-white font-bold mb-8 h-16 tracking-tight"
+            className="fluid-h3 text-white font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight"
           >
             <span>I'm a </span>
             <span className="text-white border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
@@ -79,7 +79,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="text-lg text-slate-400 mb-10 max-w-2xl mx-auto"
+            className="fluid-p text-slate-400 mb-10 max-w-2xl mx-auto px-2 md:px-0"
           >
             I specialize in building scalable, secure, and dynamic full-stack web applications.
             Passionate about clean code and creating beautiful user experiences.
@@ -89,11 +89,11 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12"
+            className="flex flex-col sm:flex-row justify-center items-center w-full gap-4 mb-12"
           >
             <Link
               to="/projects"
-              className="cursor-pointer bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-brand-500/50 box-glow"
+              className="cursor-pointer w-full sm:w-auto flex justify-center bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-brand-500/50 box-glow"
             >
               View Projects
             </Link>
@@ -101,7 +101,7 @@ const Hero = () => {
               href={cvFile}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-white/5 px-8 py-3 rounded-full text-white font-semibold hover:bg-white/10 transition-colors border border-white/10 backdrop-blur-sm"
+              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-white/5 px-8 py-3 rounded-full text-white font-semibold hover:bg-white/10 transition-colors border border-white/10 backdrop-blur-sm"
             >
               <FileDown size={20} />
               Resume
@@ -125,21 +125,21 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 1 }}
             className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-white/5"
           >
-            <div className="flex flex-col items-center">
-              <FaGithub size={24} className="text-slate-400 mb-3" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1">10+</span>
+            <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
+              <FaGithub size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">10+</span>
               <span className="text-xs md:text-sm text-slate-400 text-center">GitHub Projects</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <FaLinkedin size={24} className="text-slate-400 mb-3" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1">1k+</span>
+            </a>
+            <a href="https://www.linkedin.com/in/amanullah-ibrahim-819335329/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
+              <FaLinkedin size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">1k+</span>
               <span className="text-xs md:text-sm text-slate-400 text-center">LinkedIn Connections</span>
-            </div>
-            <div className="flex flex-col items-center">
-              <Mail size={24} className="text-slate-400 mb-3" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1">24×7</span>
+            </a>
+            <a href="mailto:amaanullah9011@gmail.com" className="flex flex-col items-center group cursor-pointer">
+              <Mail size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
               <span className="text-xs md:text-sm text-slate-400 text-center">Email Me</span>
-            </div>
+            </a>
           </motion.div>
         </div>
       </div>

@@ -54,14 +54,14 @@ const Certificates = () => {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
             <span className="text-brand-500">06.</span> Certifications
             <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
           </h2>
 
           <div className="relative">
-            {/* Center Timeline Line */}
-            <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-white/10"></div>
+            {/* Center/Left Timeline Line */}
+            <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-white/10"></div>
 
             <div className="space-y-12">
               {certificates.map((cert, idx) => (
@@ -76,11 +76,11 @@ const Certificates = () => {
                 >
                   <div className="hidden md:block w-[45%]"></div>
 
-                  <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 bg-[#0A0E17] border border-brand-500/50 rounded-full p-2 z-10 shadow-[0_0_15px_rgba(16,185,129,0.3)] bg-white/5 backdrop-blur-sm">
+                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 bg-[#0A0E17] border border-brand-500/50 rounded-full p-2 z-10 shadow-[0_0_15px_rgba(16,185,129,0.3)] bg-white/5 backdrop-blur-sm">
                     <Award className="text-brand-500" size={20} />
                   </div>
 
-                  <div className={`w-full md:w-[45%] pl-10 md:pl-0 ${idx % 2 === 0 ? 'md:pr-10' : 'md:pl-10'
+                  <div className={`w-full md:w-[45%] pl-14 sm:pl-16 md:pl-0 ${idx % 2 === 0 ? 'md:pr-10' : 'md:pl-10'
                     }`}>
                     <div className="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-white/5 hover:border-brand-500/50 rounded-2xl overflow-hidden group flex flex-col transition-all duration-300">
                       {cert.type === 'image' ? (

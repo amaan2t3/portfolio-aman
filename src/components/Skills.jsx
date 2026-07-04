@@ -58,7 +58,7 @@ const Skills = () => {
     <section id="skills" className="py-24 scroll-mt-0 relative overflow-hidden bg-[#0A0E17]">
       <div className="container mx-auto px-6 relative z-10">
 
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 flex items-center gap-4">
+        <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
           <span className="text-brand-500">02.</span> Technical Skills
           <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
         </h2>
@@ -70,9 +70,9 @@ const Skills = () => {
           transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
             {CATEGORIES.map((category, idx) => (
-              <div key={idx} className="bg-[rgba(255,255,255,0.02)] border border-white/5 backdrop-blur-md rounded-2xl p-6">
+              <div key={idx} className="bg-[rgba(255,255,255,0.02)] border border-white/5 backdrop-blur-md rounded-2xl p-6 flex flex-col h-full">
                 <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-3">
                    <category.icon size={20} className="text-brand-500" />
                    {category.title}
