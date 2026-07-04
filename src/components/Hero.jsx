@@ -69,17 +69,17 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="fluid-h3 text-white font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight"
+            className="fluid-h3 text-text-primary font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight"
           >
             <span>I'm a </span>
-            <span className="text-white border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
+            <span className="text-text-primary border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="fluid-p text-slate-400 mb-10 max-w-2xl mx-auto px-2 md:px-0"
+            className="fluid-p text-text-secondary mb-10 max-w-2xl mx-auto px-2 md:px-0"
           >
             I specialize in building scalable, secure, and dynamic full-stack web applications.
             Passionate about clean code and creating beautiful user experiences.
@@ -101,7 +101,7 @@ const Hero = () => {
               href={cvFile}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-white/5 px-8 py-3 rounded-full text-white font-semibold hover:bg-white/10 transition-colors border border-white/10 backdrop-blur-sm"
+              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-glass-bg px-8 py-3 rounded-full text-text-primary font-semibold hover:border-brand-500 transition-colors border border-border-primary backdrop-blur-sm"
             >
               <FileDown size={20} />
               Resume
@@ -114,7 +114,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.9 }}
             className="flex flex-col items-center justify-center gap-2 mb-16"
           >
-            <div className="text-slate-400 font-mono text-sm flex items-center gap-2">
+            <div className="text-text-secondary font-mono text-sm flex items-center gap-2">
               <span className="text-brand-500">▲</span> ~ amaanullah9011@gmail.com
             </div>
           </motion.div>
@@ -123,22 +123,22 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1 }}
-            className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-white/5"
+            className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary"
           >
             <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
-              <FaGithub size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">10+</span>
-              <span className="text-xs md:text-sm text-slate-400 text-center">GitHub Projects</span>
+              <FaGithub size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">10+</span>
+              <span className="text-xs md:text-sm text-text-secondary text-center">GitHub Projects</span>
             </a>
             <a href="https://www.linkedin.com/in/amanullah-ibrahim-819335329/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
-              <FaLinkedin size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">1k+</span>
-              <span className="text-xs md:text-sm text-slate-400 text-center">LinkedIn Connections</span>
+              <FaLinkedin size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">1k+</span>
+              <span className="text-xs md:text-sm text-text-secondary text-center">LinkedIn Connections</span>
             </a>
             <a href="mailto:amaanullah9011@gmail.com" className="flex flex-col items-center group cursor-pointer">
-              <Mail size={24} className="text-slate-400 mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
-              <span className="text-xs md:text-sm text-slate-400 text-center">Email Me</span>
+              <Mail size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
+              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
+              <span className="text-xs md:text-sm text-text-secondary text-center">Email Me</span>
             </a>
           </motion.div>
         </div>

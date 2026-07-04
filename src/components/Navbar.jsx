@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, Search } from 'lucide-react';
+import { Menu, X, Search, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeContext } from '../App';
 
 const NAV_LINKS = [
   { name: 'Home', to: '/' },
@@ -33,6 +34,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const navigate = useNavigate();
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -68,13 +70,13 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-12">
-          <NavLink to="/" className="text-xl md:text-2xl font-bold text-white tracking-tighter flex items-center gap-1 md:gap-2">
+          <NavLink to="/" className="text-xl md:text-2xl font-bold text-text-primary tracking-tighter flex items-center gap-1 md:gap-2">
             <span className="font-mono text-brand-500">{"</>"}</span> Aman<span className="text-brand-500">{"</>"}</span>
           </NavLink>
 
           {/* Desktop Search Bar */}
           <div className="hidden md:block relative">
-            <div className="flex items-center bg-[#0d121c] rounded-lg px-3 py-1.5 border border-white/10 focus-within:border-brand-500 transition-colors">
+            <div className="flex items-center bg-bg-secondary rounded-lg px-3 py-1.5 border border-border-primary focus-within:border-brand-500 transition-colors">
               <Search size={16} className="text-slate-400 mr-2" />
               <input
                 type="text"
@@ -83,9 +85,9 @@ const Navbar = () => {
                 onChange={handleSearch}
                 onBlur={() => setTimeout(() => setShowResults(false), 200)}
                 onFocus={() => { if (searchQuery.length > 0) setShowResults(true); }}
-                className="bg-transparent border-none outline-none text-sm text-slate-200 w-40 focus:w-56 transition-all"
+                className="bg-transparent border-none outline-none text-sm text-text-secondary w-40 focus:w-56 transition-all"
               />
-              <span className="hidden md:flex bg-white/5 text-slate-400 text-[10px] px-1.5 py-0.5 rounded ml-2 border border-white/10 whitespace-nowrap">Ctrl+K</span>
+              <span className="hidden md:flex bg-white/5 text-text-secondary text-[10px] px-1.5 py-0.5 rounded ml-2 border border-border-primary whitespace-nowrap">Ctrl+K</span>
             </div>
 
             {/* Desktop Search Results Dropdown */}
@@ -102,14 +104,14 @@ const Navbar = () => {
                       <div
                         key={i}
                         onClick={() => handleResultClick(result.path)}
-                        className="px-4 py-3 hover:bg-slate-800/80 cursor-pointer border-b border-slate-700/50 last:border-0"
+                        className="px-4 py-3 hover:bg-bg-secondary cursor-pointer border-b border-border-primary last:border-0"
                       >
-                        <div className="text-sm font-medium text-white">{result.title}</div>
-                        <div className="text-xs text-slate-400">{result.desc}</div>
+                        <div className="text-sm font-medium text-text-primary">{result.title}</div>
+                        <div className="text-xs text-text-secondary">{result.desc}</div>
                       </div>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-slate-400 text-center">No results found</div>
+                    <div className="px-4 py-3 text-sm text-text-secondary text-center">No results found</div>
                   )}
                 </motion.div>
               )}
@@ -124,21 +126,29 @@ const Navbar = () => {
               <NavLink
                 key={link.name}
                 to={link.to}
-                className={({ isActive }) => `cursor-pointer transition-colors px-3 py-1.5 rounded-lg font-medium ${isActive ? 'bg-white/10 backdrop-blur-sm text-brand-500' : 'text-slate-300 hover:text-brand-500'}`}
+                className={({ isActive }) => `cursor-pointer transition-colors px-3 py-1.5 rounded-lg font-medium ${isActive ? 'bg-glass-bg backdrop-blur-sm text-brand-500' : 'text-text-secondary hover:text-brand-500'}`}
               >
                 {link.name}
               </NavLink>
             ))}
           </div>
+          <button onClick={toggleTheme} className="text-text-secondary hover:text-brand-500 p-2 ml-4">
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden text-slate-300 hover:text-brand-500 p-2 -mr-2"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button onClick={toggleTheme} className="text-text-secondary hover:text-brand-500 p-2">
+            {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+          </button>
+          <button
+            className="text-text-secondary hover:text-brand-500 p-2 -mr-2"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -151,34 +161,34 @@ const Navbar = () => {
             className="md:hidden glass absolute top-full left-0 w-full flex flex-col items-center py-4 space-y-4"
           >
             {/* Mobile Search */}
-            <div className="w-full px-6 pb-4 mb-2 border-b border-slate-700/50">
-              <div className="flex items-center bg-slate-800/50 rounded-full px-4 py-2 border border-slate-700 focus-within:border-brand-500 transition-colors">
-                <Search size={18} className="text-slate-400 mr-2" />
+            <div className="w-full px-6 pb-4 mb-2 border-b border-border-primary">
+              <div className="flex items-center bg-bg-secondary rounded-full px-4 py-2 border border-border-primary focus-within:border-brand-500 transition-colors">
+                <Search size={18} className="text-text-secondary mr-2" />
                 <input
                   type="text"
                   placeholder="Search skills, projects..."
                   value={searchQuery}
                   onChange={handleSearch}
-                  className="bg-transparent border-none outline-none text-base text-slate-200 w-full"
+                  className="bg-transparent border-none outline-none text-base text-text-primary w-full"
                 />
               </div>
 
               {/* Mobile Search Results */}
               {showResults && (
-                <div className="mt-2 w-full bg-slate-800/80 rounded-xl border border-slate-700 overflow-hidden max-h-48 overflow-y-auto">
+                <div className="mt-2 w-full bg-bg-secondary rounded-xl border border-border-primary overflow-hidden max-h-48 overflow-y-auto">
                   {filteredResults.length > 0 ? (
                     filteredResults.map((result, i) => (
                       <div
                         key={i}
                         onClick={() => handleResultClick(result.path)}
-                        className="px-4 py-3 hover:bg-slate-700 cursor-pointer border-b border-slate-700/50 last:border-0"
+                        className="px-4 py-3 hover:bg-glass-bg cursor-pointer border-b border-border-primary last:border-0"
                       >
-                        <div className="text-sm font-medium text-white">{result.title}</div>
-                        <div className="text-xs text-slate-400">{result.desc}</div>
+                        <div className="text-sm font-medium text-text-primary">{result.title}</div>
+                        <div className="text-xs text-text-secondary">{result.desc}</div>
                       </div>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-slate-400 text-center">No results found</div>
+                    <div className="px-4 py-3 text-sm text-text-secondary text-center">No results found</div>
                   )}
                 </div>
               )}
@@ -189,7 +199,7 @@ const Navbar = () => {
                 key={link.name}
                 to={link.to}
                 onClick={() => setIsOpen(false)}
-                className={({ isActive }) => `text-lg cursor-pointer px-4 py-2 rounded-lg text-center ${isActive ? 'bg-white/10 backdrop-blur-sm text-brand-500' : 'text-slate-300 hover:text-brand-500'}`}
+                className={({ isActive }) => `text-lg cursor-pointer px-4 py-2 rounded-lg text-center ${isActive ? 'bg-glass-bg backdrop-blur-sm text-brand-500' : 'text-text-secondary hover:text-brand-500'}`}
               >
                 {link.name}
               </NavLink>

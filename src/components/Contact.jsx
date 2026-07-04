@@ -28,7 +28,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 scroll-mt-0 bg-[#0F172A]">
+    <section id="contact" className="py-24 scroll-mt-0 bg-bg-secondary transition-colors duration-300">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -37,27 +37,27 @@ const Contact = () => {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
             <span className="text-brand-500">07.</span> Get In Touch
-            <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
+            <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div>
-              <h3 className="fluid-h3 font-semibold text-white mb-6">Let's talk about everything!</h3>
-              <p className="fluid-p text-slate-400 mb-8 leading-relaxed">
+              <h3 className="fluid-h3 font-semibold text-text-primary mb-6">Let's talk about everything!</h3>
+              <p className="fluid-p text-text-secondary mb-8 leading-relaxed">
                 I'm currently looking for new opportunities, and my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
               </p>
 
               <div className="space-y-6 mb-8">
-                <div className="flex items-center gap-4 text-slate-300">
+                <div className="flex items-center gap-4 text-text-secondary">
                   <div className="p-3 glass rounded-full text-brand-500">
                     <MapPin size={24} />
                   </div>
                   <span>Pindora, Rawalpindi, Pakistan</span>
                 </div>
-                <div className="flex items-center gap-4 text-slate-300">
+                <div className="flex items-center gap-4 text-text-secondary">
                   <div className="p-3 glass rounded-full text-brand-500">
                     <Mail size={24} />
                   </div>
@@ -65,7 +65,7 @@ const Contact = () => {
                     amaanullah9011@gmail.com
                   </a>
                 </div>
-                <div className="flex items-center gap-4 text-slate-300">
+                <div className="flex items-center gap-4 text-text-secondary">
                   <div className="p-3 glass rounded-full text-brand-500">
                     <Phone size={24} />
                   </div>
@@ -77,10 +77,10 @@ const Contact = () => {
 
               {/* Social Links */}
               <div className="flex gap-4">
-                <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-slate-300 hover:text-brand-500 hover:border-brand-500/50 transition-all">
+                <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
                   <FaGithub size={20} />
                 </a>
-                <a href="https://linkedin.com/in/amanullah-ibrahim-819335329" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-slate-300 hover:text-brand-500 hover:border-brand-500/50 transition-all">
+                <a href="https://linkedin.com/in/amanullah-ibrahim-819335329" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
                   <FaLinkedin size={20} />
                 </a>
               </div>
@@ -90,7 +90,7 @@ const Contact = () => {
             <div className="glass-card p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">Name</label>
+                  <label htmlFor="name" className="block text-sm font-medium text-text-secondary mb-2">Name</label>
                   <input
                     type="text"
                     id="name"
@@ -98,12 +98,12 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+                    className="w-full bg-bg-primary border border-border-primary rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
                     placeholder="Your Name"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email</label>
+                  <label htmlFor="email" className="block text-sm font-medium text-text-secondary mb-2">Email</label>
                   <input
                     type="email"
                     id="email"
@@ -111,12 +111,12 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
+                    className="w-full bg-bg-primary border border-border-primary rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors"
                     placeholder="[EMAIL_ADDRESS]"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
+                  <label htmlFor="message" className="block text-sm font-medium text-text-secondary mb-2">Message</label>
                   <textarea
                     id="message"
                     name="message"
@@ -124,7 +124,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows="4"
-                    className="w-full bg-slate-900/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors resize-none"
+                    className="w-full bg-bg-primary border border-border-primary rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-colors resize-none"
                     placeholder="Hello Amanullah, I'd like to talk about..."
                   ></textarea>
                 </div>

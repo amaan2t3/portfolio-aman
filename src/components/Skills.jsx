@@ -40,7 +40,7 @@ const CATEGORIES = [
 const SkillItem = ({ skill }) => (
   <motion.div
     whileHover={{ y: -2 }}
-    className="bg-[rgba(255,255,255,0.03)] border border-white/5 hover:border-brand-500/50 rounded-lg p-3 flex items-center gap-3 transition-colors"
+    className="bg-glass-bg border border-border-primary hover:border-brand-500/50 rounded-lg p-3 flex items-center gap-3 transition-colors"
   >
     <div className="w-5 h-5 flex items-center justify-center">
       <img
@@ -49,18 +49,18 @@ const SkillItem = ({ skill }) => (
         className={`max-w-full max-h-full object-contain ${skill.invert ? 'filter invert brightness-0' : ''}`}
       />
     </div>
-    <span className="text-sm font-medium text-slate-200 whitespace-nowrap">{skill.name}</span>
+    <span className="text-sm font-medium text-text-primary whitespace-nowrap">{skill.name}</span>
   </motion.div>
 );
 
 const Skills = () => {
   return (
-    <section id="skills" className="py-24 scroll-mt-0 relative overflow-hidden bg-[#0A0E17]">
+    <section id="skills" className="py-24 scroll-mt-0 relative overflow-hidden bg-bg-primary transition-colors duration-300">
       <div className="container mx-auto px-6 relative z-10">
 
-        <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
+        <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
           <span className="text-brand-500">02.</span> Technical Skills
-          <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
+          <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
         </h2>
 
         <motion.div
@@ -72,8 +72,8 @@ const Skills = () => {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
             {CATEGORIES.map((category, idx) => (
-              <div key={idx} className="bg-[rgba(255,255,255,0.02)] border border-white/5 backdrop-blur-md rounded-2xl p-6 flex flex-col h-full">
-                <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-3">
+              <div key={idx} className="bg-glass-bg border border-border-primary backdrop-blur-md rounded-2xl p-6 flex flex-col h-full">
+                <h3 className="text-lg font-semibold text-text-primary mb-6 flex items-center gap-3">
                    <category.icon size={20} className="text-brand-500" />
                    {category.title}
                 </h3>

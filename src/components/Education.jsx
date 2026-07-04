@@ -2,9 +2,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
 import vuImg from '../assets/virtualUniversity.jpg';
-import pnyImg from '../assets/pny.png';
+import pnyImg from '../assets/PNY.png';
 import aqImg from '../assets/Aqcollege.jpg';
-import cppImg from '../assets/C++.png';
+import cppImg from '../assets/cisco-logo.png';
 
 const educationData = [
   {
@@ -49,12 +49,12 @@ const Education = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
-            <span className="text-brand-500">05.</span> Education & Certifications
-            <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
+          <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
+            <span className="text-brand-500">05.</span> Education
+            <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
           </h2>
 
-          <div className="relative border-l border-slate-700 ml-4 md:ml-6 space-y-12">
+          <div className="relative border-l border-border-primary ml-4 md:ml-6 space-y-12">
             {educationData.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -64,20 +64,20 @@ const Education = () => {
                 transition={{ duration: 0.5, delay: idx * 0.2 }}
                 className="relative pl-10 md:pl-12"
               >
-                <div className="absolute -left-5 top-0 bg-slate-900 border-2 border-brand-500 rounded-full p-1.5 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
+                <div className="absolute -left-5 top-0 bg-bg-primary border-2 border-brand-500 rounded-full p-1.5 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
                   {item.icon}
                 </div>
 
                 <div className="glass-card p-6 border-l-4 border-l-brand-500 flex flex-col md:flex-row gap-6 items-start">
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-white mb-1">{item.degree}</h3>
-                    <h4 className="text-lg text-slate-300 mb-2">{item.institution}</h4>
+                    <h3 className="text-xl font-bold text-text-primary mb-1">{item.degree}</h3>
+                    <h4 className="text-lg text-text-secondary mb-2">{item.institution}</h4>
                     <span className="inline-block px-3 py-1 bg-brand-500/10 text-brand-500 rounded-full text-sm font-mono">
                       {item.period}
                     </span>
                   </div>
                   {item.image && (
-                    <div className="w-full md:w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center">
+                    <div className="w-full md:w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-glass-bg border border-border-primary flex items-center justify-center">
                       <img src={item.image} alt={item.institution} className="w-full h-full object-cover opacity-90" />
                     </div>
                   )}

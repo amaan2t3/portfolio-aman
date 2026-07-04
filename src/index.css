@@ -5,28 +5,59 @@
   --color-brand-600: #059669;
   --color-brand-glow: rgba(16, 185, 129, 0.5);
   
-  --color-bg-dark: #0A0E17;
-  --color-bg-card: rgba(255, 255, 255, 0.03);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-primary: var(--border-color);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
   
   --font-sans: 'Inter', 'Space Grotesk', sans-serif;
 }
 
 @layer base {
+  :root {
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --border-color: #E2E8F0;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.05);
+    --mesh-bg-base: #F8FAFC;
+    --mesh-glow: rgba(16, 185, 129, 0.05);
+    --mesh-glow-alt: rgba(99, 102, 241, 0.03);
+  }
+
+  .dark {
+    --bg-primary: #0A0E17;
+    --bg-secondary: #0F172A;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --border-color: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --mesh-bg-base: #0A0E17;
+    --mesh-glow: rgba(20, 184, 166, 0.1);
+    --mesh-glow-alt: rgba(99, 102, 241, 0.05);
+  }
+
   body {
-    @apply bg-[#0A0E17] text-[#94A3B8] font-sans antialiased overflow-x-hidden;
+    @apply bg-bg-primary text-text-secondary font-sans antialiased overflow-x-hidden transition-colors duration-300;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply text-[#F1F5F9];
+    @apply text-text-primary transition-colors duration-300;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-[rgba(255,255,255,0.03)] backdrop-blur-md border border-[#1E293B] shadow-xl;
+    @apply bg-glass-bg backdrop-blur-md border border-glass-border shadow-xl;
   }
   
   .glass-card {
-    @apply bg-[rgba(255,255,255,0.03)] backdrop-blur-sm border border-[rgba(16,185,129,0.2)] rounded-2xl hover:border-[#10B981] transition-all duration-300;
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-2xl hover:border-[#10B981] transition-all duration-300;
   }
 
   .text-glow {
@@ -72,12 +103,13 @@
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background-color: #0A0E17;
+  background-color: var(--mesh-bg-base);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(20, 184, 166, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, var(--mesh-glow) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--mesh-glow) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--mesh-glow-alt) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, var(--mesh-glow) 0px, transparent 50%);
   filter: blur(60px);
+  transition: background-color 0.3s ease;
 }
 

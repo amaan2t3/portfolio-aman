@@ -53,7 +53,7 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-24 scroll-mt-0 bg-[#0F172A]">
+    <section id="projects" className="py-24 scroll-mt-0 bg-bg-secondary transition-colors duration-300">
       <div className="container mx-auto px-6">
         <motion.div 
         initial={{ opacity: 0, y: 50 }}
@@ -62,9 +62,9 @@ const Projects = () => {
         transition={{ duration: 0.6 }}
         className="max-w-5xl mx-auto"
       >
-        <h2 className="fluid-h2 font-bold text-white mb-12 flex items-center gap-4">
+        <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
           <span className="text-brand-500">04.</span> Featured Projects
-          <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
+          <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
         </h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -72,9 +72,9 @@ const Projects = () => {
             <motion.div
               key={idx}
               whileHover={{ y: -5 }}
-              className="bg-[rgba(255,255,255,0.02)] backdrop-blur-md border border-white/5 hover:border-brand-500/50 rounded-2xl flex flex-col h-full group overflow-hidden transition-all duration-300"
+              className="bg-glass-bg backdrop-blur-md border border-border-primary hover:border-brand-500/50 rounded-2xl flex flex-col h-full group overflow-hidden transition-all duration-300"
             >
-              <div className="w-full aspect-video bg-[#0d121c] relative overflow-hidden flex items-center justify-center border-b border-white/5">
+              <div className="w-full aspect-video bg-bg-secondary relative overflow-hidden flex items-center justify-center border-b border-border-primary">
                  {project.image ? (
                    <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                  ) : (
@@ -82,25 +82,25 @@ const Projects = () => {
                  )}
               </div>
               <div className="p-6 flex flex-col h-full">
-                <h3 className="text-xl font-bold text-slate-200 mb-3 group-hover:text-brand-500 transition-colors">
+                <h3 className="text-xl font-bold text-text-primary mb-3 group-hover:text-brand-500 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                <p className="text-text-secondary text-sm leading-relaxed mb-6 flex-grow">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech, i) => (
-                    <span key={i} className="bg-white/5 border border-white/10 text-xs text-slate-300 rounded-md px-3 py-1">
+                    <span key={i} className="bg-glass-bg border border-border-primary text-xs text-text-secondary rounded-md px-3 py-1">
                       {tech}
                     </span>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-white/5">
-                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-400 hover:text-brand-500 transition-colors bg-white/5 px-4 py-2 rounded-lg border border-white/5 hover:border-brand-500/30">
+                <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-border-primary">
+                  <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-secondary hover:text-brand-500 transition-colors bg-glass-bg px-4 py-2 rounded-lg border border-border-primary hover:border-brand-500/30">
                     <FaGithub size={16} /> Code
                   </a>
                   {project.live !== "#" && (
-                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-400 hover:text-brand-500 transition-colors bg-white/5 px-4 py-2 rounded-lg border border-white/5 hover:border-brand-500/30">
+                    <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-text-secondary hover:text-brand-500 transition-colors bg-glass-bg px-4 py-2 rounded-lg border border-border-primary hover:border-brand-500/30">
                       <ExternalLink size={16} /> Live Demo
                     </a>
                   )}

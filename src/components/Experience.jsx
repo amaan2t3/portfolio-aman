@@ -34,14 +34,14 @@ const Experience = () => {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto"
         >
-          <h2 className="fluid-h2 font-bold text-white mb-16 flex items-center gap-4">
+          <h2 className="fluid-h2 font-bold text-text-primary mb-16 flex items-center gap-4">
             <span className="text-brand-500">03.</span> Work Experience
-            <div className="h-[1px] bg-slate-700 flex-grow ml-4"></div>
+            <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
           </h2>
 
           <div className="relative">
             {/* Center/Left Timeline Line */}
-            <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-slate-700"></div>
+            <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 h-full w-[2px] bg-border-primary"></div>
 
             <div className="space-y-12">
               {experienceData.map((item, idx) => (
@@ -58,7 +58,7 @@ const Experience = () => {
                   <div className="hidden md:block w-[45%]"></div>
 
                   {/* Timeline Dot */}
-                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 bg-slate-900 border-2 border-brand-500 rounded-full p-2 z-10 shadow-[0_0_10px_rgba(16,185,129,0.5)]">
+                  <div className="absolute left-4 md:left-1/2 transform -translate-x-1/2 bg-bg-primary border-2 border-brand-500 rounded-full p-2 z-10 shadow-[0_0_10px_rgba(16,185,129,0.5)]">
                     <Briefcase className="text-brand-500" size={20} />
                   </div>
 
@@ -67,19 +67,19 @@ const Experience = () => {
                     }`}>
                     <div className="glass-card p-6 border-b-4 border-b-brand-500 relative group overflow-hidden">
                       <div className="absolute inset-0 bg-brand-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                      <h3 className="text-xl md:text-2xl font-bold text-white mb-2 relative z-10">{item.title}</h3>
+                      <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-2 relative z-10">{item.title}</h3>
                       <h4 className="text-lg text-brand-500 font-medium mb-3 relative z-10">{item.company}</h4>
                       <div className={`flex flex-wrap gap-2 mb-4 relative z-10 ${item.side === 'left' ? 'md:justify-end' : ''
                         }`}>
-                        <span className="inline-block px-3 py-1 bg-slate-800/80 border border-slate-700 text-slate-300 rounded-full text-xs font-mono">
+                        <span className="inline-block px-3 py-1 bg-glass-bg border border-border-primary text-text-secondary rounded-full text-xs font-mono">
                           {item.period}
                         </span>
                       </div>
-                      <p className="text-slate-400 text-sm leading-relaxed relative z-10">
+                      <p className="text-text-secondary text-sm leading-relaxed relative z-10">
                         {item.description}
                       </p>
                       {item.image && (
-                        <div className="relative z-10 mt-6 rounded-lg overflow-hidden border border-white/10 bg-[#0d121c]">
+                        <div className="relative z-10 mt-6 rounded-lg overflow-hidden border border-border-primary bg-bg-secondary">
                           <img src={item.image} alt={`${item.company} certificate`} className="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => window.open(item.image, '_blank')} />
                         </div>
                       )}
