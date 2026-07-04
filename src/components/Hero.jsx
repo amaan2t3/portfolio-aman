@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, FileDown } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 const ROLES = ["MERN Stack Developer", "Full-Stack Web Developer", "React.js Enthusiast"];
 
@@ -59,7 +59,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-5xl md:text-7xl font-bold mb-6"
+          className="text-6xl md:text-8xl font-extrabold mb-6 tracking-tighter"
         >
           Hi, I'm <span className="hero-gradient-text">Amanullah Ibrahim</span>
         </motion.h1>
@@ -68,7 +68,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-2xl md:text-4xl text-slate-300 font-medium mb-8 h-12"
+          className="text-3xl md:text-5xl text-white font-bold mb-8 h-16 tracking-tight"
         >
           <span>I'm a </span>
           <span className="text-white border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
@@ -91,17 +91,14 @@ const Hero = () => {
           className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12"
         >
           <Link 
-            to="projects" 
-            smooth={true} 
-            duration={500} 
-            offset={-80}
+            to="/projects" 
             className="cursor-pointer bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-brand-500/50 box-glow"
           >
             View Projects
           </Link>
           <a 
             href="#" 
-            className="flex items-center gap-2 glass px-8 py-3 rounded-full text-white font-medium hover:bg-slate-800 transition-colors border border-slate-700"
+            className="flex items-center gap-2 bg-white/5 px-8 py-3 rounded-full text-white font-semibold hover:bg-white/10 transition-colors border border-white/10 backdrop-blur-sm"
           >
             <FileDown size={20} />
             Download Resume
@@ -109,20 +106,37 @@ const Hero = () => {
         </motion.div>
 
         <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+          className="flex flex-col items-center justify-center gap-2 mb-16"
+        >
+          <div className="text-slate-400 font-mono text-sm flex items-center gap-2">
+            <span className="text-brand-500">▲</span> ~ amaanullah9011@gmail.com
+          </div>
+        </motion.div>
+
+        <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1 }}
-          className="flex justify-center gap-6"
+          className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-white/5"
         >
-          <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-slate-300 hover:text-brand-500 hover:border-brand-500/50 transition-all">
-            <FaGithub size={24} />
-          </a>
-          <a href="https://linkedin.com/in/amanullah-ibrahim-819335329" target="_blank" rel="noopener noreferrer" className="p-3 glass rounded-full text-slate-300 hover:text-brand-500 hover:border-brand-500/50 transition-all">
-            <FaLinkedin size={24} />
-          </a>
-          <a href="mailto:amaanullah9011@gmail.com" className="p-3 glass rounded-full text-slate-300 hover:text-brand-500 hover:border-brand-500/50 transition-all">
-            <Mail size={24} />
-          </a>
+          <div className="flex flex-col items-center">
+            <FaGithub size={24} className="text-slate-400 mb-3" />
+            <span className="text-xl md:text-2xl font-bold text-white mb-1">10+</span>
+            <span className="text-xs md:text-sm text-slate-400 text-center">GitHub Projects</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaLinkedin size={24} className="text-slate-400 mb-3" />
+            <span className="text-xl md:text-2xl font-bold text-white mb-1">1k+</span>
+            <span className="text-xs md:text-sm text-slate-400 text-center">LinkedIn Connections</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <Mail size={24} className="text-slate-400 mb-3" />
+            <span className="text-xl md:text-2xl font-bold text-white mb-1">24×7</span>
+            <span className="text-xs md:text-sm text-slate-400 text-center">Email Me</span>
+          </div>
         </motion.div>
       </div>
       </div>
