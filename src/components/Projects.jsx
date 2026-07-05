@@ -8,8 +8,17 @@ import gymImg from '../assets/GYM.png';
 import currencyImg from '../assets/currency-converter.png';
 import bgChangerImg from '../assets/bg-changer.png';
 import smartWatchImg from '../assets/smart-watch.png';
+import urlShortenerImg from '../assets/urlshortner.png';
 
 const projects = [
+  {
+    title: "URL Shortener Service",
+    description: "A fast and secure URL shortening application with user authentication. It features a robust Node.js backend using EJS templates and Supabase for real-time database management.",
+    tech: ["Node.js", "EJS", "JavaScript", "HTML/CSS", "Supabase"],
+    github: "https://github.com/amaan2t3",
+    live: "https://url-shortener-psi-ivory.vercel.app/",
+    image: urlShortenerImg
+  },
   {
     title: "Full-Stack Blog Web Application",
     description: "A comprehensive blog platform allowing users to create, read, update, and delete posts with image upload capabilities and secure JWT authentication.",
