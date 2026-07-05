@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, FileDown } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { trackButtonClick, trackSocialClick, trackContactInitiate } from '../utils/analytics';
 import cvFile from '../assets/Amanullah_Ibrahim_CV.pdf';
 
 const ROLES = ["MERN Stack Developer", "Full-Stack Web Developer", "React.js Enthusiast"];
@@ -93,6 +94,7 @@ const Hero = () => {
           >
             <Link
               to="/projects"
+              onClick={() => trackButtonClick('hero_actions', 'View Projects')}
               className="cursor-pointer w-full sm:w-auto flex justify-center bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-brand-500/50 box-glow"
             >
               View Projects
@@ -101,6 +103,7 @@ const Hero = () => {
               href={cvFile}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackButtonClick('hero_actions', 'Download Resume')}
               className="flex items-center justify-center w-full sm:w-auto gap-2 bg-glass-bg px-8 py-3 rounded-full text-text-primary font-semibold hover:border-brand-500 transition-colors border border-border-primary backdrop-blur-sm"
             >
               <FileDown size={20} />
@@ -125,17 +128,17 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 1 }}
             className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary"
           >
-            <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
+            <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="flex flex-col items-center group cursor-pointer">
               <FaGithub size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">10+</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">GitHub Projects</span>
             </a>
-            <a href="https://www.linkedin.com/in/amanullah-ibrahim-819335329/" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center group cursor-pointer">
+            <a href="https://www.linkedin.com/in/amanullah-ibrahim-819335329/" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="flex flex-col items-center group cursor-pointer">
               <FaLinkedin size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">1k+</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">LinkedIn Connections</span>
             </a>
-            <a href="mailto:amaanullah9011@gmail.com" className="flex flex-col items-center group cursor-pointer">
+            <a href="mailto:amaanullah9011@gmail.com" onClick={() => trackContactInitiate('Hero Email Link')} className="flex flex-col items-center group cursor-pointer">
               <Mail size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">Email Me</span>

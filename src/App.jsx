@@ -9,6 +9,7 @@ import Projects from './components/Projects';
 import Education from './components/Education';
 import Certificates from './components/Certificates';
 import Contact from './components/Contact';
+import RouteTracker from './components/RouteTracker';
 
 export const ThemeContext = createContext();
 
@@ -34,6 +35,7 @@ function App() {
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       <Router>
+        <RouteTracker />
         <div className="min-h-screen">
           <div className="mesh-bg"></div>
           <Navbar />
