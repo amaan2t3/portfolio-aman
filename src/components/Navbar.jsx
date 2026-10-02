@@ -71,7 +71,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-12">
           <NavLink to="/" className="text-xl md:text-2xl font-bold text-text-primary tracking-tighter flex items-center gap-1 md:gap-2">
-            <span className="font-mono text-brand-500">{"</>"}</span> Amaan<span className="text-brand-500 font-bold font-weight-200">{"."}</span>
+            <span className="font-mono text-brand-500">{"</>"}</span> Amaan<span className="text-brand-500 font-bold">{"."}</span>
           </NavLink>
 
           {/* Desktop Search Bar */}
