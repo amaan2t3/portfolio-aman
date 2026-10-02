@@ -24,7 +24,7 @@ const About = () => {
                 Hello! My name is <span className="text-brand-500 font-medium">Amanullah</span> and I enjoy creating things that live on the internet. My interest in web development started back when I was exploring how interactive websites were built, which led me down the path of becoming a full-stack developer.
               </p>
               <p>
-                I am currently a <span className="text-text-primary font-medium">BSCS student at Virtual University of Pakistan (2025–Present)</span>, and I recently completed a specialized certification in MERN Stack Development. I'm passionate about writing clean, scalable code and building products that provide a great user experience.
+                I am currently a <span className="text-text-primary font-medium">BSIT student at National Skill University Islamabad (2026–Present)</span>, and I recently completed a specialized certification in MERN Stack Development. I'm passionate about writing clean, scalable code and building products that provide a great user experience.
               </p>
               <p>
                 Right now, my main focus is on expanding my skill set and I am actively <span className="text-text-primary font-medium border-b-2 border-brand-500 pb-1">seeking a MERN Stack internship</span> where I can contribute to real-world projects, learn from experienced engineers, and grow as a developer.

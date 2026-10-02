@@ -1,18 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
-import vuImg from '../assets/virtualUniversity.jpg';
+import Nsu from '../assets/Nsu-mukhtar-auditorium.jpg';
 import pnyImg from '../assets/PNY.png';
 import aqImg from '../assets/Aqcollege.jpg';
 import cppImg from '../assets/cisco-logo.png';
 
 const educationData = [
   {
-    degree: "BS Computer Science",
-    institution: "Virtual University of Pakistan",
-    period: "2025 – Present",
+    degree: "BS  Information Tecnalogy",
+    institution: "National Skill University Islamabad",
+    period: "2026 – Present",
     icon: <GraduationCap className="text-brand-500" size={24} />,
-    image: vuImg
+    image: Nsu
   },
   {
     degree: "Intermediate (ICS)",
