@@ -9,8 +9,17 @@ import currencyImg from '../assets/currency-converter.png';
 import bgChangerImg from '../assets/bg-changer.png';
 import smartWatchImg from '../assets/smart-watch.png';
 import urlShortenerImg from '../assets/urlshortner.png';
+import futsalImg from '../assets/futsal.png';
 
 const projects = [
+  {
+    title: "Futsal Booking System",
+    description: "PlayArena is a Futsal Booking System that allows users to explore futsal grounds in Rawalpindi and Skardu, check availability, and request bookings online with admin approval.",
+    tech: ["Node.js", "EJS", "JavaScript", "HTML/CSS", "MONGODB"],
+    github: "https://github.com/amaan2t3/playarena-sports-booking",
+    live: "https://playarena-sports-booking.vercel.app/",
+    image: futsalImg
+  },
   {
     title: "URL Shortener Service",
     description: "A fast and secure URL shortening application with user authentication. It features a robust Node.js backend using EJS templates and Supabase for real-time database management.",
