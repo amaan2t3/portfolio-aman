@@ -30,7 +30,7 @@ const COLLECTIONS = {
       { key: 'company', label: 'Company', required: true },
       { key: 'period', label: 'Period' },
       { key: 'description', label: 'Description', type: 'textarea' },
-      { key: 'image', label: 'Image URL or asset path', type: 'textarea' },
+      { key: 'image', label: 'Position image', type: 'image' },
       { key: 'side', label: 'Timeline side', type: 'select', options: ['left', 'right'] },
     ],
   },
@@ -43,7 +43,7 @@ const COLLECTIONS = {
       { key: 'tech', label: 'Technologies (one per line)', type: 'array' },
       { key: 'github', label: 'Source code URL' },
       { key: 'live', label: 'Live demo URL' },
-      { key: 'image', label: 'Image URL or asset path', type: 'textarea' },
+      { key: 'image', label: 'Project image', type: 'image' },
     ],
   },
   education: {
@@ -54,7 +54,7 @@ const COLLECTIONS = {
       { key: 'institution', label: 'Institution', required: true },
       { key: 'period', label: 'Period' },
       { key: 'icon', label: 'Timeline icon', type: 'select', options: ['graduation', 'book', 'award'] },
-      { key: 'image', label: 'Image URL or asset path', type: 'textarea' },
+      { key: 'image', label: 'Institution image', type: 'image' },
     ],
   },
   certificates: {
@@ -64,7 +64,7 @@ const COLLECTIONS = {
       { key: 'title', label: 'Certificate name', required: true },
       { key: 'issuer', label: 'Issuer', required: true },
       { key: 'date', label: 'Date' },
-      { key: 'image', label: 'Preview image URL or asset path', type: 'textarea' },
+      { key: 'image', label: 'Certificate preview image', type: 'image' },
       { key: 'link', label: 'Certificate document URL or asset path' },
     ],
   },
@@ -83,7 +83,7 @@ const PROFILE_FIELDS = [
 ];
 
 const ABOUT_FIELDS = [
-  { key: 'image', label: 'Profile image URL or asset path', type: 'textarea' },
+  { key: 'image', label: 'Profile image', type: 'image' },
   { key: 'paragraphs', label: 'About paragraphs (separate with a blank line)', type: 'paragraphs' },
 ];
 
@@ -105,6 +105,74 @@ function fromInputValue(field, value) {
   if (field.type === 'array') return value.split('\n').map((item) => item.trim()).filter(Boolean);
   if (field.type === 'paragraphs') return value.split(/\n\s*\n/).map((item) => item.trim()).filter(Boolean);
   return value;
+}
+
+function ImageUploadField({ value, onChange, label }) {
+  const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/avif'];
+    if (!allowedTypes.includes(file.type)) {
+      setError('Choose a PNG, JPEG, GIF, WebP, or AVIF image.');
+      return;
+    }
+    if (file.size > 3 * 1024 * 1024) {
+      setError('Images must be no larger than 3 MB.');
+      return;
+    }
+
+    setIsUploading(true);
+    setError('');
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('Could not read the selected image.'));
+        reader.readAsDataURL(file);
+      });
+      const response = await fetch('/api/upload-image', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contentType: file.type, data: dataUrl.split(',')[1] }),
+      });
+      const result = await readApiJson(response);
+      if (!response.ok) throw new Error(result.error || 'Could not upload the image.');
+      onChange(result.url);
+    } catch (uploadError) {
+      console.error('Unable to upload portfolio image:', uploadError);
+      setError(uploadError.message);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  return (
+    <div className="admin-image-upload">
+      {value && <img className="admin-image-preview" src={value} alt={`${label} preview`} />}
+      <div className="admin-image-upload-actions">
+        <label className="admin-button admin-button-quiet admin-image-upload-button">
+          {isUploading ? <LoaderCircle className="admin-spinner" size={15} /> : <Plus size={15} />}
+          {isUploading ? 'Uploading…' : value ? 'Replace image' : 'Choose image'}
+          <input
+            type="file"
+            accept="image/png,image/jpeg,image/gif,image/webp,image/avif"
+            onChange={handleFileChange}
+            disabled={isUploading}
+            hidden
+          />
+        </label>
+        {value && <button className="admin-button admin-button-quiet" type="button" onClick={() => { onChange(''); setError(''); }}>Remove image</button>}
+      </div>
+      <span className="admin-image-help">PNG, JPEG, GIF, WebP, or AVIF · max 3 MB</span>
+      {error && <span className="admin-error" role="alert">{error}</span>}
+    </div>
+  );
 }
 
 function RecordForm({ fields, initialValue, onSave, onCancel }) {
@@ -133,9 +201,15 @@ function RecordForm({ fields, initialValue, onSave, onCancel }) {
     <form className="admin-form" onSubmit={handleSubmit}>
       <div className="admin-form-grid">
         {fields.map((field) => (
-          <label className={`admin-field ${field.type === 'textarea' || field.type === 'array' || field.type === 'paragraphs' ? 'admin-field-wide' : ''}`} key={field.key}>
+          <div className={`admin-field ${field.type === 'image' || field.type === 'textarea' || field.type === 'array' || field.type === 'paragraphs' ? 'admin-field-wide' : ''}`} key={field.key}>
             <span>{field.label}{field.required && <span className="admin-required"> *</span>}</span>
-            {field.type === 'select' ? (
+            {field.type === 'image' ? (
+              <ImageUploadField
+                label={field.label}
+                value={values[field.key]}
+                onChange={(value) => setValues({ ...values, [field.key]: value })}
+              />
+            ) : field.type === 'select' ? (
               <select value={values[field.key]} onChange={(event) => setValues({ ...values, [field.key]: event.target.value })}>
                 {field.options.map((option) => <option key={option} value={option}>{option}</option>)}
               </select>
@@ -152,7 +226,7 @@ function RecordForm({ fields, initialValue, onSave, onCancel }) {
                 onChange={(event) => setValues({ ...values, [field.key]: event.target.value })}
               />
             )}
-          </label>
+          </div>
         ))}
       </div>
       {error && <p className="admin-error" role="alert">{error}</p>}
@@ -254,7 +328,7 @@ function SkillsEditor({ categories, onChange }) {
   const category = isAdding ? { title: '', icon: 'code', skills: [] } : categories[index];
   const [title, setTitle] = useState(category?.title || '');
   const [icon, setIcon] = useState(category?.icon || 'code');
-  const [items, setItems] = useState(() => (category?.skills || []).map((skill) => `${skill.name} | ${skill.icon || ''}${skill.invert ? ' | invert' : ''}`).join('\n'));
+  const [skills, setSkills] = useState(() => category?.skills || []);
   const [saveError, setSaveError] = useState('');
 
   const selectCategory = (nextIndex) => {
@@ -263,7 +337,7 @@ function SkillsEditor({ categories, onChange }) {
     setIsAdding(false);
     setTitle(nextCategory?.title || '');
     setIcon(nextCategory?.icon || 'code');
-    setItems((nextCategory?.skills || []).map((skill) => `${skill.name} | ${skill.icon || ''}${skill.invert ? ' | invert' : ''}`).join('\n'));
+    setSkills(nextCategory?.skills || []);
   };
 
   const addCategory = () => {
@@ -271,15 +345,14 @@ function SkillsEditor({ categories, onChange }) {
     setIsAdding(true);
     setTitle('');
     setIcon('code');
-    setItems('');
+    setSkills([]);
   };
 
   const save = async (event) => {
     event.preventDefault();
-    const parsedSkills = items.split('\n').map((line) => {
-      const [name, image = '', option = ''] = line.split('|').map((part) => part.trim());
-      return name ? { name, icon: image, invert: option.toLowerCase() === 'invert' } : null;
-    }).filter(Boolean);
+    const parsedSkills = skills
+      .map((skill) => ({ ...skill, name: skill.name.trim() }))
+      .filter((skill) => skill.name);
     const categoryData = { title: title.trim(), icon, skills: parsedSkills };
     if (!categoryData.title) return;
     const next = [...categories];
@@ -331,10 +404,33 @@ function SkillsEditor({ categories, onChange }) {
         <div className="admin-form-grid">
           <label className="admin-field"><span>Category name</span><input value={title} onChange={(event) => setTitle(event.target.value)} required /></label>
           <label className="admin-field"><span>Category icon</span><select value={icon} onChange={(event) => setIcon(event.target.value)}><option value="monitor">Monitor</option><option value="code">Code</option><option value="tools">Tools</option></select></label>
-          <label className="admin-field admin-field-wide">
-            <span>Skills — one per line: name | image URL | invert (optional)</span>
-            <textarea rows="12" value={items} onChange={(event) => setItems(event.target.value)} placeholder={'React | https://example.com/react.svg\nNode.js | https://example.com/node.svg'} />
-          </label>
+          <div className="admin-field admin-field-wide">
+            <span>Skills</span>
+            <div className="admin-skill-editor">
+              {skills.map((skill, skillIndex) => (
+                <div className="admin-skill-row" key={`${skill.name}-${skillIndex}`}>
+                  <label className="admin-field">
+                    <span>Skill name</span>
+                    <input
+                      value={skill.name}
+                      onChange={(event) => setSkills(skills.map((item, itemIndex) => itemIndex === skillIndex ? { ...item, name: event.target.value } : item))}
+                    />
+                  </label>
+                  <div className="admin-field">
+                    <span>Skill icon</span>
+                    <ImageUploadField
+                      label={`${skill.name || 'Skill'} icon`}
+                      value={skill.icon}
+                      onChange={(value) => setSkills(skills.map((item, itemIndex) => itemIndex === skillIndex ? { ...item, icon: value } : item))}
+                    />
+                  </div>
+                  <label className="admin-skill-invert"><input type="checkbox" checked={Boolean(skill.invert)} onChange={(event) => setSkills(skills.map((item, itemIndex) => itemIndex === skillIndex ? { ...item, invert: event.target.checked } : item))} /> Invert icon in dark mode</label>
+                  <button type="button" className="admin-icon-button admin-danger-button" aria-label={`Remove ${skill.name || 'skill'}`} onClick={() => setSkills(skills.filter((_, itemIndex) => itemIndex !== skillIndex))}><Trash2 size={16} /></button>
+                </div>
+              ))}
+            </div>
+            <button type="button" className="admin-button admin-button-quiet" onClick={() => setSkills([...skills, { name: '', icon: '', invert: false }])}><Plus size={15} /> Add skill</button>
+          </div>
         </div>
         <div className="admin-form-actions"><button className="admin-button admin-button-primary" type="submit"><Save size={16} /> Save category</button></div>
       </form>

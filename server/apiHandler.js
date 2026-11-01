@@ -8,6 +8,15 @@ const supabaseUrl = process.env.VITE_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const sessionCookie = 'portfolio_admin_session';
 const sessionDurationSeconds = 60 * 60 * 8;
+const imageBucket = 'portfolio-images';
+const maxImageSizeBytes = 3 * 1024 * 1024;
+const imageTypes = {
+  'image/png': { extension: 'png', matches: (bytes) => bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])) },
+  'image/jpeg': { extension: 'jpg', matches: (bytes) => bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff },
+  'image/gif': { extension: 'gif', matches: (bytes) => ['GIF87a', 'GIF89a'].includes(bytes.subarray(0, 6).toString('ascii')) },
+  'image/webp': { extension: 'webp', matches: (bytes) => bytes.subarray(0, 4).toString('ascii') === 'RIFF' && bytes.subarray(8, 12).toString('ascii') === 'WEBP' },
+  'image/avif': { extension: 'avif', matches: (bytes) => bytes.subarray(4, 12).toString('ascii').includes('ftypavif') || bytes.subarray(4, 12).toString('ascii').includes('ftypavis') },
+};
 const loginAttempts = new Map();
 const supabase = supabaseUrl && serviceRoleKey
   ? createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false, autoRefreshToken: false } })
@@ -146,6 +155,39 @@ export async function handleApiRequest(request, response) {
     const secure = process.env.NODE_ENV === 'production' ? '; Secure' : '';
     response.setHeader('Set-Cookie', `${sessionCookie}=; HttpOnly; SameSite=Strict; Path=/api; Max-Age=0${secure}`);
     return sendJson(response, 204, null);
+  }
+
+  if (method === 'POST' && pathname === '/api/upload-image') {
+    if (!verifySessionToken(readCookie(request, sessionCookie))) {
+      return sendJson(response, 401, { error: 'Please sign in again to continue.' });
+    }
+    if (!supabase) return sendJson(response, 503, { error: 'Portfolio storage is not configured on the server.' });
+
+    const { contentType, data } = request.body || {};
+    const imageType = Object.hasOwn(imageTypes, contentType) ? imageTypes[contentType] : null;
+    if (!imageType || typeof data !== 'string' || !/^[A-Za-z0-9+/]+={0,2}$/.test(data)) {
+      return sendJson(response, 400, { error: 'Choose a PNG, JPEG, GIF, WebP, or AVIF image.' });
+    }
+
+    const image = Buffer.from(data, 'base64');
+    if (image.length === 0 || image.length > maxImageSizeBytes) {
+      return sendJson(response, 413, { error: 'Images must be no larger than 3 MB.' });
+    }
+    if (!imageType.matches(image)) {
+      return sendJson(response, 400, { error: 'The selected file does not match its image format.' });
+    }
+
+    const path = `${crypto.randomUUID()}.${imageType.extension}`;
+    const { error } = await supabase.storage
+      .from(imageBucket)
+      .upload(path, image, { contentType, upsert: false });
+
+    if (error) {
+      console.error('Unable to upload portfolio image:', error.message);
+      return sendJson(response, 502, { error: 'Could not upload the image to portfolio storage.' });
+    }
+    const { data: publicUrl } = supabase.storage.from(imageBucket).getPublicUrl(path);
+    return sendJson(response, 201, { url: publicUrl.publicUrl });
   }
 
   if (method === 'PUT' && pathname === '/api/portfolio') {

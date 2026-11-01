@@ -20,5 +20,18 @@ drop policy if exists "Portfolio admins can update content" on public.portfolio_
 drop function if exists public.is_portfolio_admin();
 drop table if exists public.portfolio_admins;
 
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'portfolio-images',
+  'portfolio-images',
+  true,
+  3145728,
+  array['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/avif']
+)
+on conflict (id) do update set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
+
 -- Only the server uses the service-role key to write portfolio content.
 -- Never expose that key to the browser or add it to a VITE_ variable.

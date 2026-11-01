@@ -8,7 +8,7 @@ import { handleApiRequest } from './server/apiHandler.js'
 const localApi = express()
 
 localApi.disable('x-powered-by')
-localApi.use(express.json({ limit: '2mb', strict: true }))
+localApi.use(express.json({ limit: '5mb', strict: true }))
 localApi.use('/api', (request, response) => {
   void handleApiRequest(request, response).catch((error) => {
     console.error('Admin API request failed:', error)

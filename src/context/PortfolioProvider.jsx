@@ -13,7 +13,11 @@ function updateLegacyImageUrls(value) {
       return value;
     }
 
-    const optimizedAsset = optimizedPortfolioAssets.find(({ legacyPrefix }) => fileName.startsWith(legacyPrefix));
+    const optimizedAsset = optimizedPortfolioAssets.find(({ legacyPrefix }) => {
+      const baseName = legacyPrefix.replace(/-$/, '');
+      return fileName.startsWith(legacyPrefix)
+        || ['webp', 'png', 'jpg', 'jpeg'].some((extension) => fileName === `${baseName}.${extension}`);
+    });
     return optimizedAsset?.image || value;
   }
 
