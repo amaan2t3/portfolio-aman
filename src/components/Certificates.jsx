@@ -1,49 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Award, FileText } from 'lucide-react';
-import pnyCert from '../assets/pny.png';
-import cppCert from '../assets/C++Essentials1.pdf';
-import cppCertImg from '../assets/C++.png';
-import writingCert from '../assets/Creative_Writing_Certificate.pdf';
-import writingCertImg from '../assets/writing.png';
-import digitalCert from '../assets/Digitsl-Literacy.pdf';
-import digitalCertImg from '../assets/digital.png';
-
-const certificates = [
-  {
-    title: "MERN Stack Development",
-    issuer: "PNY Training Center",
-    date: "September 2025",
-    image: pnyCert,
-    type: "image"
-  },
-  {
-    title: "C++ Essentials 1",
-    issuer: "Cisco Networking Academy",
-    date: "Jun 2026",
-    image: cppCertImg,
-    link: cppCert,
-    type: "image"
-  },
-  {
-    title: "Digital Literacy",
-    issuer: "Ignite / DigiSkills", // Assumption
-    date: "2026",
-    image: digitalCertImg,
-    link: digitalCert,
-    type: "image"
-  },
-  {
-    title: "Creative Writing",
-    issuer: "Ignite / DigiSkills", // Assumption
-    date: "April 2026",
-    image: writingCertImg,
-    link: writingCert,
-    type: "image"
-  }
-];
+import { usePortfolio } from '../context/usePortfolio';
 
 const Certificates = () => {
+  const { data: { certificates } } = usePortfolio();
+
   return (
     <section id="certificates" className="py-24 scroll-mt-0">
       <div className="container mx-auto px-6">
@@ -83,7 +45,7 @@ const Certificates = () => {
                   <div className={`w-full md:w-[45%] pl-14 sm:pl-16 md:pl-0 ${idx % 2 === 0 ? 'md:pr-10' : 'md:pl-10'
                     }`}>
                     <div className="bg-glass-bg backdrop-blur-md border border-border-primary hover:border-brand-500/50 rounded-2xl overflow-hidden group flex flex-col transition-all duration-300">
-                      {cert.type === 'image' ? (
+                      {cert.image ? (
                         <div className="w-full h-48 overflow-hidden bg-bg-secondary border-b border-border-primary">
                           <img
                             src={cert.image}

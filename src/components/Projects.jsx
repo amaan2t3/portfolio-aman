@@ -3,74 +3,11 @@ import { motion } from 'framer-motion';
 import { ExternalLink, Folder } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { trackProjectClick } from '../utils/analytics';
-import blogImg from '../assets/blogwebapp.png';
-import gymImg from '../assets/GYM.png';
-import currencyImg from '../assets/currency-converter.png';
-import bgChangerImg from '../assets/bg-changer.png';
-import smartWatchImg from '../assets/smart-watch.png';
-import urlShortenerImg from '../assets/urlshortner.png';
-import futsalImg from '../assets/futsal.png';
-
-const projects = [
-  {
-    title: "Futsal Booking System",
-    description: "PlayArena is a Futsal Booking System that allows users to explore futsal grounds in Rawalpindi and Skardu, check availability, and request bookings online with admin approval.",
-    tech: ["Node.js", "EJS", "JavaScript", "HTML/CSS", "MONGODB"],
-    github: "https://github.com/amaan2t3/playarena-sports-booking",
-    live: "https://playarena-sports-booking.vercel.app/",
-    image: futsalImg
-  },
-  {
-    title: "URL Shortener Service",
-    description: "A fast and secure URL shortening application with user authentication. It features a robust Node.js backend using EJS templates and Supabase for real-time database management.",
-    tech: ["Node.js", "EJS", "JavaScript", "HTML/CSS", "Supabase"],
-    github: "https://github.com/amaan2t3",
-    live: "https://url-shortener-psi-ivory.vercel.app/",
-    image: urlShortenerImg
-  },
-  {
-    title: "Full-Stack Blog Web Application",
-    description: "A comprehensive blog platform allowing users to create, read, update, and delete posts with image upload capabilities and secure JWT authentication.",
-    tech: ["JavaScript", "React.js", "Node.js", "API Integration", "Appwrite", "JWT", "Tailwind CSS"],
-    github: "https://github.com/amaan2t3",
-    live: "https://blog-app-five-psi-40.vercel.app",
-    image: blogImg
-  },
-  {
-    title: "Gym & Fitness Website",
-    description: "A modern, responsive fitness platform featuring a BMI calculator, dynamic exercise lists, and a sleek user interface for gym enthusiasts.",
-    tech: ["JavaScript", "React.js", "Node.js", "Tailwind CSS"],
-    github: "https://github.com/amaan2t3",
-    live: "https://gym-fitness-amaan.netlify.app",
-    image: gymImg
-  },
-  {
-    title: "Currency Converter",
-    description: "A real-time currency conversion application fetching live exchange rates to provide accurate monetary conversions globally.",
-    tech: ["JavaScript", "React.js", "API Integration", "Tailwind CSS", "Node.js",],
-    github: "https://github.com/amaan2t3",
-    live: "https://currency-converter-amaan.netlify.app/",
-    image: currencyImg
-  },
-  {
-    title: "Background Changer",
-    description: "An interactive utility application that dynamically alters the background color of the interface based on user interaction.",
-    tech: ["JavaScript", "React.js", "Tailwind CSS", "State Management"],
-    github: "https://github.com/amaan2t3",
-    live: "https://bg-changer-amaan.netlify.app/",
-    image: bgChangerImg
-  },
-  {
-    title: "Smartwatch UI Design",
-    description: "A sleek, interactive user interface mockup for a smartwatch application demonstrating modern frontend design principles and animations.",
-    tech: ["HTML5", "React.js", "Tailwind CSS", "JavaScript", "Node.js", "API Integration",],
-    github: "https://github.com/amaan2t3",
-    live: "https://smartwatch-ui-amaan.netlify.app/",
-    image: smartWatchImg
-  }
-];
+import { usePortfolio } from '../context/usePortfolio';
 
 const Projects = () => {
+  const { data: { projects } } = usePortfolio();
+
   return (
     <section id="projects" className="py-24 scroll-mt-0 bg-bg-secondary transition-colors duration-300">
       <div className="container mx-auto px-6">
@@ -115,10 +52,12 @@ const Projects = () => {
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-4 mt-auto pt-4 border-t border-border-primary">
-                    <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('Source Code', project.title)} className="flex items-center gap-2 text-sm text-text-secondary hover:text-brand-500 transition-colors bg-glass-bg px-4 py-2 rounded-lg border border-border-primary hover:border-brand-500/30">
-                      <FaGithub size={16} /> Code
-                    </a>
-                    {project.live !== "#" && (
+                    {project.github && (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('Source Code', project.title)} className="flex items-center gap-2 text-sm text-text-secondary hover:text-brand-500 transition-colors bg-glass-bg px-4 py-2 rounded-lg border border-border-primary hover:border-brand-500/30">
+                        <FaGithub size={16} /> Code
+                      </a>
+                    )}
+                    {project.live && project.live !== "#" && (
                       <a href={project.live} target="_blank" rel="noopener noreferrer" onClick={() => trackProjectClick('Live Demo', project.title)} className="flex items-center gap-2 text-sm text-text-secondary hover:text-brand-500 transition-colors bg-glass-bg px-4 py-2 rounded-lg border border-border-primary hover:border-brand-500/30">
                         <ExternalLink size={16} /> Live Demo
                       </a>

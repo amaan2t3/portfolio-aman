@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { trackContactInitiate, trackSocialClick } from '../utils/analytics';
+import { usePortfolio } from '../context/usePortfolio';
 
 const Contact = () => {
+  const { data: { profile, contact } } = usePortfolio();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -12,7 +14,7 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const phoneNumber = "923281923524";
+    const phoneNumber = contact.whatsapp;
     const text = `*New message from your portfolio!*\n\n*Name:* ${formData.name}\n*Email:* ${formData.email}\n\n*Message:*\n${formData.message}`;
     const encodedText = encodeURIComponent(text);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedText}`;
@@ -58,32 +60,32 @@ const Contact = () => {
                   <div className="p-3 glass rounded-full text-brand-500">
                     <MapPin size={24} />
                   </div>
-                  <span>Pindora, Rawalpindi, Pakistan</span>
+                  <span>{contact.location}</span>
                 </div>
                 <div className="flex items-center gap-4 text-text-secondary">
                   <div className="p-3 glass rounded-full text-brand-500">
                     <Mail size={24} />
                   </div>
-                  <a href="mailto:amaanullah9011@gmail.com" onClick={() => trackContactInitiate('Email Link Click')} className="hover:text-brand-500 transition-colors">
-                    amaanullah9011@gmail.com
+                  <a href={`mailto:${contact.email}`} onClick={() => trackContactInitiate('Email Link Click')} className="hover:text-brand-500 transition-colors">
+                    {contact.email}
                   </a>
                 </div>
                 <div className="flex items-center gap-4 text-text-secondary">
                   <div className="p-3 glass rounded-full text-brand-500">
                     <Phone size={24} />
                   </div>
-                  <a href="tel:03281923524" onClick={() => trackContactInitiate('Phone Link Click')} className="hover:text-brand-500 transition-colors">
-                    0328 1923524
+                  <a href={`tel:${contact.phoneLink}`} onClick={() => trackContactInitiate('Phone Link Click')} className="hover:text-brand-500 transition-colors">
+                    {contact.phone}
                   </a>
                 </div>
               </div>
 
               {/* Social Links */}
               <div className="flex gap-4">
-                <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub Contact')} className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub Contact')} className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
                   <FaGithub size={20} />
                 </a>
-                <a href="https://linkedin.com/in/amanullah-ibrahim-819335329" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn Contact')} className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn Contact')} className="p-3 glass rounded-full text-text-secondary hover:text-brand-500 hover:border-brand-500/50 transition-all">
                   <FaLinkedin size={20} />
                 </a>
               </div>

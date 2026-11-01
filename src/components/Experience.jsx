@@ -1,29 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase } from 'lucide-react';
-import kiwiImg from '../assets/kiwilogic-intership.png';
-import devHubImg from '../assets/DeveloperHub-intership.jpeg';
-
-const experienceData = [
-  {
-    title: "Web Development Intern",
-    company: "Kiwi Logics Labs",
-    period: "Jan 2026 – Apr 2026",
-    description: "Successfully completed an internship exhibiting professionalism and a positive attitude towards assigned tasks. Found to be punctual, responsible, and eager to learn.",
-    side: "left",
-    image: kiwiImg
-  },
-  {
-    title: "Front End Development Intern",
-    company: "DevelopersHub Corporation",
-    period: "Nov 2025 – Dec 2025",
-    description: "Successfully completed a six-week virtual internship program with exceptional performance and significant contributions demonstrated throughout the period.",
-    side: "right",
-    image: devHubImg
-  }
-];
+import { usePortfolio } from '../context/usePortfolio';
 
 const Experience = () => {
+  const { data: { experience: experienceData } } = usePortfolio();
+
   return (
     <section id="experience" className="py-24 scroll-mt-0 relative">
       <div className="container mx-auto px-6">

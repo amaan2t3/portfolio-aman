@@ -1,44 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
-import Nsu from '../assets/Nsu-mukhtar-auditorium.jpg';
-import pnyImg from '../assets/PNY.png';
-import aqImg from '../assets/Aqcollege.jpg';
-import cppImg from '../assets/cisco-logo.png';
-
-const educationData = [
-  {
-    degree: "BS  Information Tecnalogy",
-    institution: "National Skill University Islamabad",
-    period: "2026 – Present",
-    icon: <GraduationCap className="text-brand-500" size={24} />,
-    image: Nsu
-  },
-  {
-    degree: "Intermediate (ICS)",
-    institution: "Dr. A.Q. Khan School & College",
-    period: "2022 – 2024",
-    icon: <BookOpen className="text-brand-500" size={24} />,
-    image: aqImg
-  },
-  {
-    degree: "MERN Stack Development Certification",
-    institution: "PNY Training Center",
-    period: "Mar 2025",
-    icon: <Award className="text-brand-500" size={24} />,
-    image: pnyImg
-  },
-
-  {
-    degree: "C++ Essentials 1",
-    institution: "Cisco Networking Academy",
-    period: "Jun 2026",
-    icon: <Award className="text-brand-500" size={24} />,
-    image: cppImg
-  }
-];
+import { usePortfolio } from '../context/usePortfolio';
 
 const Education = () => {
+  const { data: { education: educationData } } = usePortfolio();
+  const icons = {
+    graduation: GraduationCap,
+    book: BookOpen,
+    award: Award,
+  };
+
   return (
     <section id="education" className="py-24 scroll-mt-0">
       <div className="container mx-auto px-6">
@@ -65,7 +37,7 @@ const Education = () => {
                 className="relative pl-10 md:pl-12"
               >
                 <div className="absolute -left-5 top-0 bg-bg-primary border-2 border-brand-500 rounded-full p-1.5 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
-                  {item.icon}
+                  {React.createElement(icons[item.icon] || Award, { className: 'text-brand-500', size: 24 })}
                 </div>
 
                 <div className="glass-card p-6 border-l-4 border-l-brand-500 flex flex-col md:flex-row gap-6 items-start">

@@ -1,16 +1,21 @@
-# React + Vite
+# Amanullah Ibrahim — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React portfolio built with Vite, Tailwind CSS, and Framer Motion.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+## Single-admin portal setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The `/admin` portal uses one server-side `ADMIN_EMAIL` and `ADMIN_PASSWORD`. The Node API validates credentials, rate-limits failed login attempts, and issues a signed, HTTP-only, same-site session cookie. The browser never receives the admin password or Supabase service-role key. Portfolio edits are written by the API to Supabase; visitors can read the portfolio using the public anon key and database read policy.
 
-## Expanding the Oxlint configuration
+1. Copy `.env.example` to `.env` and set `ADMIN_EMAIL`, a unique `ADMIN_PASSWORD` of at least 12 characters, and a random `ADMIN_SESSION_SECRET` of at least 32 characters.
+2. Set `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and the server-only `SUPABASE_SERVICE_ROLE_KEY` from the Supabase project. Never prefix the service-role key or admin credentials with `VITE_`.
+3. Run [`supabase/setup.sql`](./supabase/setup.sql) in the Supabase SQL editor.
+4. In one terminal run `npm run dev:api`; in another run `npm run dev`. Open the Vite URL and go to `/admin`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+For production, build the app with `npm run build`, set the same environment variables in the hosting provider's server environment, and run `npm start`. The Node server serves the built app and API from one origin; do not deploy the API secrets as client-side variables.

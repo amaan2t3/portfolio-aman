@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ThemeContext } from '../App';
+import { ThemeContext } from '../context/ThemeContext';
+import { usePortfolio } from '../context/usePortfolio';
 
 const NAV_LINKS = [
   { name: 'Home', to: '/' },
@@ -35,6 +36,7 @@ const Navbar = () => {
   const [showResults, setShowResults] = useState(false);
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+  const { data: { profile } } = usePortfolio();
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -71,7 +73,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-12">
           <NavLink to="/" className="text-xl md:text-2xl font-bold text-text-primary tracking-tighter flex items-center gap-1 md:gap-2">
-            <span className="font-mono text-brand-500">{"</>"}</span> Amaan<span className="text-brand-500 font-bold">{"."}</span>
+            <span className="font-mono text-brand-500">{"</>"}</span> {profile.brand}<span className="text-brand-500 font-bold">{"."}</span>
           </NavLink>
 
           {/* Desktop Search Bar */}
@@ -135,6 +137,7 @@ const Navbar = () => {
           <button onClick={toggleTheme} className="text-text-secondary hover:text-brand-500 p-2 ml-4">
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
+          <NavLink to="/admin" className="text-text-secondary hover:text-brand-500 p-2 text-sm">Admin</NavLink>
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -204,6 +207,13 @@ const Navbar = () => {
                 {link.name}
               </NavLink>
             ))}
+            <NavLink
+              to="/admin"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) => `text-lg cursor-pointer px-4 py-2 rounded-lg text-center ${isActive ? 'bg-glass-bg backdrop-blur-sm text-brand-500' : 'text-text-secondary hover:text-brand-500'}`}
+            >
+              Admin
+            </NavLink>
           </motion.div>
         )}
       </AnimatePresence>

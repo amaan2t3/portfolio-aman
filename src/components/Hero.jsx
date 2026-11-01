@@ -1,29 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, FileDown } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { trackButtonClick, trackSocialClick, trackContactInitiate } from '../utils/analytics';
-import cvFile from '../assets/Amanullah_Ibrahim_CV.pdf';
-
-const ROLES = ["MERN Stack Developer", "Full-Stack Web Developer", "React.js Enthusiast"];
+import { usePortfolio } from '../context/usePortfolio';
 
 const Hero = () => {
+  const { data: { profile, contact } } = usePortfolio();
+  const roles = useMemo(() => profile.roles.length ? profile.roles : ['Developer'], [profile.roles]);
   const [roleIndex, setRoleIndex] = useState(0);
   const [text, setText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [delta, setDelta] = useState(150);
 
-  useEffect(() => {
-    let ticker = setInterval(() => {
-      tick();
-    }, delta);
-    return () => clearInterval(ticker);
-  }, [text, isDeleting, delta]);
-
-  const tick = () => {
-    let i = roleIndex % ROLES.length;
-    let fullText = ROLES[i];
+  const tick = useCallback(() => {
+    let i = roleIndex % roles.length;
+    let fullText = roles[i];
     let updatedText = isDeleting
       ? fullText.substring(0, text.length - 1)
       : fullText.substring(0, text.length + 1);
@@ -42,7 +35,12 @@ const Hero = () => {
       setRoleIndex(roleIndex + 1);
       setDelta(150); // typing speed
     }
-  };
+  }, [isDeleting, roles, roleIndex, text]);
+
+  useEffect(() => {
+    const ticker = setInterval(tick, delta);
+    return () => clearInterval(ticker);
+  }, [delta, tick]);
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center pt-20">
@@ -63,7 +61,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="fluid-h1 font-extrabold mb-4 md:mb-6 tracking-tighter"
           >
-            Hi, I'm <span className="hero-gradient-text">Amanullah Ibrahim</span>
+            Hi, I'm <span className="hero-gradient-text">{profile.name}</span>
           </motion.h1>
 
           <motion.div
@@ -82,8 +80,7 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="fluid-p text-text-secondary mb-10 max-w-2xl mx-auto px-2 md:px-0"
           >
-            I specialize in building scalable, secure, and dynamic full-stack web applications.
-            Passionate about clean code and creating beautiful user experiences.
+            {profile.intro}
           </motion.p>
 
           <motion.div
@@ -100,7 +97,7 @@ const Hero = () => {
               View Projects
             </Link>
             <a
-              href={cvFile}
+              href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackButtonClick('hero_actions', 'Download Resume')}
@@ -118,7 +115,7 @@ const Hero = () => {
             className="flex flex-col items-center justify-center gap-2 mb-16"
           >
             <div className="text-text-secondary font-mono text-sm flex items-center gap-2">
-              <span className="text-brand-500">▲</span> ~ amaanullah9011@gmail.com
+              <span className="text-brand-500">▲</span> ~ {contact.email}
             </div>
           </motion.div>
 
@@ -128,17 +125,17 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 1 }}
             className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary"
           >
-            <a href="https://github.com/amaan2t3" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="flex flex-col items-center group cursor-pointer">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="flex flex-col items-center group cursor-pointer">
               <FaGithub size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">10+</span>
+              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">{profile.githubCount}</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">GitHub Projects</span>
             </a>
-            <a href="https://www.linkedin.com/in/amanullah-ibrahim-819335329/" target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="flex flex-col items-center group cursor-pointer">
+            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="flex flex-col items-center group cursor-pointer">
               <FaLinkedin size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">1k+</span>
+              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">{profile.linkedinCount}</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">LinkedIn Connections</span>
             </a>
-            <a href="mailto:amaanullah9011@gmail.com" onClick={() => trackContactInitiate('Hero Email Link')} className="flex flex-col items-center group cursor-pointer">
+            <a href={`mailto:${contact.email}`} onClick={() => trackContactInitiate('Hero Email Link')} className="flex flex-col items-center group cursor-pointer">
               <Mail size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">Email Me</span>
