@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Skills from './components/Skills';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Education from './components/Education';
-import Certificates from './components/Certificates';
-import Contact from './components/Contact';
 import RouteTracker from './components/RouteTracker';
-import Admin from './components/Admin';
 import { PortfolioProvider } from './context/PortfolioProvider';
 import { usePortfolio } from './context/usePortfolio';
 import { ThemeContext } from './context/ThemeContext';
+
+const Hero = lazy(() => import('./components/Hero'));
+const About = lazy(() => import('./components/About'));
+const Skills = lazy(() => import('./components/Skills'));
+const Experience = lazy(() => import('./components/Experience'));
+const Projects = lazy(() => import('./components/Projects'));
+const Education = lazy(() => import('./components/Education'));
+const Certificates = lazy(() => import('./components/Certificates'));
+const Contact = lazy(() => import('./components/Contact'));
+const Admin = lazy(() => import('./components/Admin'));
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -55,24 +56,28 @@ function AppRoutes() {
     <div className="min-h-screen">
       <div className="mesh-bg"></div>
       {isAdmin ? (
-        <Routes>
-          <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={<Admin />} />
-        </Routes>
+        <Suspense fallback={<div className="min-h-screen" aria-busy="true" />}>
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+            <Route path="*" element={<Admin />} />
+          </Routes>
+        </Suspense>
       ) : (
         <>
           <Navbar />
           <main className="relative z-10 w-full">
-            <Routes>
-              <Route path="/" element={<Hero />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/skills" element={<Skills />} />
-              <Route path="/experience" element={<Experience />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/education" element={<Education />} />
-              <Route path="/certificates" element={<Certificates />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
+            <Suspense fallback={<div className="min-h-[65vh]" aria-busy="true" />}>
+              <Routes>
+                <Route path="/" element={<Hero />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/skills" element={<Skills />} />
+                <Route path="/experience" element={<Experience />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/education" element={<Education />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/contact" element={<Contact />} />
+              </Routes>
+            </Suspense>
           </main>
           <footer className="glass mt-24 py-6 text-center text-text-secondary relative z-10">
             <p>&copy; {new Date().getFullYear()} {data.profile.name}. All rights reserved.</p>

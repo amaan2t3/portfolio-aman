@@ -1,25 +1,25 @@
 import cvFile from '../assets/Amanullah_Ibrahim_CV.pdf';
-import aqImage from '../assets/Aqcollege.jpg';
-import ciscoImage from '../assets/cisco-logo.png';
+import aqImage from '../assets/optimized/Aqcollege.webp';
+import ciscoImage from '../assets/optimized/cisco-logo.webp';
 import cppCertificate from '../assets/C++Essentials1.pdf';
-import cppImage from '../assets/C++.png';
+import cppImage from '../assets/optimized/C++.webp';
 import digitalCertificate from '../assets/Digitsl-Literacy.pdf';
-import digitalImage from '../assets/digital.png';
-import devHubImage from '../assets/DeveloperHub-intership.jpeg';
-import futsalImage from '../assets/futsal.png';
-import gymImage from '../assets/GYM.png';
-import blogImage from '../assets/blogwebapp.png';
-import kiwiImage from '../assets/kiwilogic-intership.png';
-import nsuImage from '../assets/Nsu-mukhtar-auditorium.jpg';
-import pnyCertificateImage from '../assets/pny.png';
-import pnyImage from '../assets/PNY.png';
-import smartWatchImage from '../assets/smart-watch.png';
-import bgChangerImage from '../assets/bg-changer.png';
-import currencyImage from '../assets/currency-converter.png';
-import urlShortenerImage from '../assets/urlshortner.png';
+import digitalImage from '../assets/optimized/digital.webp';
+import devHubImage from '../assets/optimized/DeveloperHub-intership.webp';
+import futsalImage from '../assets/optimized/futsal.webp';
+import gymImage from '../assets/optimized/GYM.webp';
+import blogImage from '../assets/optimized/blogwebapp.webp';
+import kiwiImage from '../assets/optimized/kiwilogic-intership.webp';
+import nsuImage from '../assets/optimized/Nsu-mukhtar-auditorium.webp';
+import pnyCertificateImage from '../assets/optimized/pny.webp';
+import pnyImage from '../assets/optimized/PNY.webp';
+import smartWatchImage from '../assets/optimized/smart-watch.webp';
+import bgChangerImage from '../assets/optimized/bg-changer.webp';
+import currencyImage from '../assets/optimized/currency-converter.webp';
+import urlShortenerImage from '../assets/optimized/urlshortner.webp';
 import writingCertificate from '../assets/Creative_Writing_Certificate.pdf';
-import writingImage from '../assets/writing.png';
-import profileImage from '../assets/aman.png';
+import writingImage from '../assets/optimized/writing.webp';
+import profileImage from '../assets/optimized/aman.webp';
 
 const icon = (name) => `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}`;
 
@@ -227,3 +227,24 @@ export const initialPortfolioData = {
     whatsapp: '923281923524',
   },
 };
+
+export const optimizedPortfolioAssets = [
+  { legacyPrefix: 'aman-', image: profileImage },
+  { legacyPrefix: 'Aqcollege-', image: aqImage },
+  { legacyPrefix: 'cisco-logo-', image: ciscoImage },
+  { legacyPrefix: 'C__-', image: cppImage },
+  { legacyPrefix: 'DeveloperHub-intership-', image: devHubImage },
+  { legacyPrefix: 'futsal-', image: futsalImage },
+  { legacyPrefix: 'GYM-', image: gymImage },
+  { legacyPrefix: 'blogwebapp-', image: blogImage },
+  { legacyPrefix: 'kiwilogic-intership-', image: kiwiImage },
+  { legacyPrefix: 'Nsu-mukhtar-auditorium-', image: nsuImage },
+  { legacyPrefix: 'pny-', image: pnyCertificateImage },
+  { legacyPrefix: 'PNY-', image: pnyImage },
+  { legacyPrefix: 'smart-watch-', image: smartWatchImage },
+  { legacyPrefix: 'bg-changer-', image: bgChangerImage },
+  { legacyPrefix: 'currency-converter-', image: currencyImage },
+  { legacyPrefix: 'urlshortner-', image: urlShortenerImage },
+  { legacyPrefix: 'digital-', image: digitalImage },
+  { legacyPrefix: 'writing-', image: writingImage },
+];

@@ -62,7 +62,14 @@ const Experience = () => {
                       </p>
                       {item.image && (
                         <div className="relative z-10 mt-6 rounded-lg overflow-hidden border border-border-primary bg-bg-secondary">
-                          <img src={item.image} alt={`${item.company} certificate`} className="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => window.open(item.image, '_blank')} />
+                          <img
+                            src={item.image}
+                            alt={`${item.company} certificate`}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-48 object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
+                            onClick={() => window.open(item.image, '_blank')}
+                          />
                         </div>
                       )}
                     </div>

@@ -9,6 +9,10 @@ npm install
 npm run dev
 ```
 
+After changing source portfolio images, regenerate their responsive WebP copies with `npm run optimize:assets`.
+
+The public pages are route-split, and gallery images are lazy-loaded to avoid downloading every section's media on the first visit.
+
 ## Single-admin portal setup
 
 The `/admin` portal uses one server-side `ADMIN_EMAIL` and `ADMIN_PASSWORD`. The Node API validates credentials, rate-limits failed login attempts, and issues a signed, HTTP-only, same-site session cookie. The browser never receives the admin password or Supabase service-role key. Portfolio edits are written by the API to Supabase; visitors can read the portfolio using the public anon key and database read policy.

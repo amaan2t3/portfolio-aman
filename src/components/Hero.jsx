@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Mail, FileDown } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,7 @@ const Hero = () => {
   const { data: { profile, contact } } = usePortfolio();
   const roles = useMemo(() => profile.roles.length ? profile.roles : ['Developer'], [profile.roles]);
   const [roleIndex, setRoleIndex] = useState(0);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(roles[0]);
   const [isDeleting, setIsDeleting] = useState(false);
   const [delta, setDelta] = useState(150);
 
@@ -46,49 +45,24 @@ const Hero = () => {
     <section id="hero" className="min-h-screen flex items-center justify-center pt-20">
       <div className="container mx-auto px-6">
         <div className="text-center w-full max-w-4xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-brand-500 font-semibold tracking-wider uppercase mb-4"
-          >
+          <p className="text-brand-500 font-semibold tracking-wider uppercase mb-4">
             Welcome to my portfolio
-          </motion.p>
+          </p>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="fluid-h1 font-extrabold mb-4 md:mb-6 tracking-tighter"
-          >
+          <h1 className="fluid-h1 font-extrabold mb-4 md:mb-6 tracking-tighter">
             Hi, I'm <span className="hero-gradient-text">{profile.name}</span>
-          </motion.h1>
+          </h1>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="fluid-h3 text-text-primary font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight"
-          >
+          <div className="fluid-h3 text-text-primary font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight">
             <span>I'm a </span>
             <span className="text-text-primary border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
-          </motion.div>
+          </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="fluid-p text-text-secondary mb-10 max-w-2xl mx-auto px-2 md:px-0"
-          >
+          <p className="fluid-p text-text-secondary mb-10 max-w-2xl mx-auto px-2 md:px-0">
             {profile.intro}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex flex-col sm:flex-row justify-center items-center w-full gap-4 mb-12"
-          >
+          <div className="flex flex-col sm:flex-row justify-center items-center w-full gap-4 mb-12">
             <Link
               to="/projects"
               onClick={() => trackButtonClick('hero_actions', 'View Projects')}
@@ -106,25 +80,15 @@ const Hero = () => {
               <FileDown size={20} />
               Resume
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="flex flex-col items-center justify-center gap-2 mb-16"
-          >
+          <div className="flex flex-col items-center justify-center gap-2 mb-16">
             <div className="text-text-secondary font-mono text-sm flex items-center gap-2">
               <span className="text-brand-500">▲</span> ~ {contact.email}
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1 }}
-            className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary"
-          >
+          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary">
             <a href={profile.github} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="flex flex-col items-center group cursor-pointer">
               <FaGithub size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">{profile.githubCount}</span>
@@ -140,7 +104,7 @@ const Hero = () => {
               <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
               <span className="text-xs md:text-sm text-text-secondary text-center">Email Me</span>
             </a>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -6,15 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Amanullah Ibrahim | MERN Stack Developer</title>
     
-    <!-- Google Analytics (GA4) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=%VITE_GA_MEASUREMENT_ID%"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      
-      // Basic initialization, page views will be tracked manually via React Router
-      gtag('config', '%VITE_GA_MEASUREMENT_ID%', { send_page_view: false });
+    <script type="module">
+      const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+      if (measurementId) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', measurementId, { send_page_view: false });
+
+        const analyticsScript = document.createElement('script');
+        analyticsScript.async = true;
+        analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+        document.head.append(analyticsScript);
+      }
     </script>
   </head>
   <body>

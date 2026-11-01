@@ -1,8 +1,28 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { initialPortfolioData } from '../data/portfolioData';
+import { initialPortfolioData, optimizedPortfolioAssets } from '../data/portfolioData';
 import { readApiJson } from '../lib/api';
-import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { fetchPublicPortfolio, isSupabaseConfigured } from '../lib/supabase';
 import { PortfolioContext } from './portfolioContext';
+
+function updateLegacyImageUrls(value) {
+  if (typeof value === 'string') {
+    let fileName;
+    try {
+      fileName = decodeURIComponent(new URL(value, window.location.origin).pathname.split('/').pop() || '');
+    } catch {
+      return value;
+    }
+
+    const optimizedAsset = optimizedPortfolioAssets.find(({ legacyPrefix }) => fileName.startsWith(legacyPrefix));
+    return optimizedAsset?.image || value;
+  }
+
+  if (Array.isArray(value)) return value.map(updateLegacyImageUrls);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, updateLegacyImageUrls(item)]));
+  }
+  return value;
+}
 
 export function PortfolioProvider({ children }) {
   const [data, setData] = useState(initialPortfolioData);
@@ -10,24 +30,23 @@ export function PortfolioProvider({ children }) {
   const [contentLoading, setContentLoading] = useState(isSupabaseConfigured);
 
   useEffect(() => {
-    if (!supabase) return undefined;
+    if (!isSupabaseConfigured) return undefined;
 
     let active = true;
     const loadContent = async () => {
-      const { data: row, error } = await supabase
-        .from('portfolio_content')
-        .select('content')
-        .eq('id', 1)
-        .maybeSingle();
-
-      if (!active) return;
-      if (error) {
-        console.error('Unable to load portfolio content from Supabase:', error);
-        setStorageError(`Could not load saved portfolio content: ${error.message}`);
-      } else if (row?.content && typeof row.content === 'object' && !Array.isArray(row.content)) {
-        setData({ ...initialPortfolioData, ...row.content });
+      try {
+        const content = await fetchPublicPortfolio();
+        if (active && content && typeof content === 'object' && !Array.isArray(content)) {
+          setData(updateLegacyImageUrls({ ...initialPortfolioData, ...content }));
+        }
+      } catch (error) {
+        if (active) {
+          console.error('Unable to load portfolio content from Supabase:', error);
+          setStorageError(`Could not load saved portfolio content: ${error.message}`);
+        }
+      } finally {
+        if (active) setContentLoading(false);
       }
-      setContentLoading(false);
     };
 
     void loadContent();

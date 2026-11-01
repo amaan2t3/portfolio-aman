@@ -24,15 +24,21 @@ const Projects = () => {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, idx) => (
+            {projects.map((project) => (
               <motion.div
-                key={idx}
+                key={project.title}
                 whileHover={{ y: -5 }}
                 className="bg-glass-bg backdrop-blur-md border border-border-primary hover:border-brand-500/50 rounded-2xl flex flex-col h-full group overflow-hidden transition-all duration-300"
               >
                 <div className="w-full aspect-video bg-bg-secondary relative overflow-hidden flex items-center justify-center border-b border-border-primary">
                   {project.image ? (
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    />
                   ) : (
                     <Folder size={48} className="text-brand-500/20" />
                   )}
@@ -45,8 +51,8 @@ const Projects = () => {
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tech.map((tech, i) => (
-                      <span key={i} className="bg-glass-bg border border-border-primary text-xs text-text-secondary rounded-md px-3 py-1">
+                    {project.tech.map((tech) => (
+                      <span key={tech} className="bg-glass-bg border border-border-primary text-xs text-text-secondary rounded-md px-3 py-1">
                         {tech}
                       </span>
                     ))}

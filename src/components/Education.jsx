@@ -50,7 +50,7 @@ const Education = () => {
                   </div>
                   {item.image && (
                     <div className="w-full md:w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-glass-bg border border-border-primary flex items-center justify-center">
-                      <img src={item.image} alt={item.institution} className="w-full h-full object-cover opacity-90" />
+                      <img src={item.image} alt={item.institution} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-90" />
                     </div>
                   )}
                 </div>

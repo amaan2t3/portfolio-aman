@@ -12,6 +12,8 @@ const SkillItem = ({ skill }) => (
       <img
         src={skill.icon}
         alt={skill.name}
+        loading="lazy"
+        decoding="async"
         className={`max-w-full max-h-full object-contain ${skill.invert ? 'filter invert brightness-0' : ''}`}
       />
     </div>

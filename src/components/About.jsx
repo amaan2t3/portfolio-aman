@@ -29,7 +29,15 @@ const About = () => {
               <div className="absolute inset-0 bg-brand-500 rounded-2xl transform translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300"></div>
               <div className="glass-card relative z-10 overflow-hidden rounded-2xl h-80 md:h-96 flex items-center justify-center bg-bg-primary border-2 border-border-primary">
                 <div className="absolute inset-0 bg-brand-500/20 mix-blend-overlay z-10 group-hover:bg-transparent transition-colors duration-500"></div>
-                <img src={about.image} alt="Portfolio profile" className="w-full h-full object-cover object-[center_20%] filter grayscale group-hover:grayscale-0 transition-all duration-500 relative z-0" />
+                <img
+                  src={about.image}
+                  alt="Portfolio profile"
+                  width="900"
+                  height="1158"
+                  fetchPriority="high"
+                  decoding="async"
+                  className="w-full h-full object-cover object-[center_20%] filter grayscale group-hover:grayscale-0 transition-all duration-500 relative z-0"
+                />
               </div>
             </div>
           </div>

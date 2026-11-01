@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeContext } from '../context/ThemeContext';
 import { usePortfolio } from '../context/usePortfolio';
 
@@ -64,10 +63,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+    <nav
       className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4' : 'bg-transparent py-6'}`}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -93,12 +89,8 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Search Results Dropdown */}
-            <AnimatePresence>
-              {showResults && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
+            {showResults && (
+                <div
                   className="absolute left-0 top-full mt-2 w-72 glass rounded-xl border border-slate-700 shadow-xl overflow-hidden"
                 >
                   {filteredResults.length > 0 ? (
@@ -115,9 +107,8 @@ const Navbar = () => {
                   ) : (
                     <div className="px-4 py-3 text-sm text-text-secondary text-center">No results found</div>
                   )}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+            )}
           </div>
         </div>
 
@@ -155,12 +146,8 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+      {isOpen && (
+          <div
             className="md:hidden glass absolute top-full left-0 w-full flex flex-col items-center py-4 space-y-4"
           >
             {/* Mobile Search */}
@@ -214,10 +201,9 @@ const Navbar = () => {
             >
               Admin
             </NavLink>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+          </div>
+      )}
+    </nav>
   );
 };
 
