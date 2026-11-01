@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen } from 'lucide-react';
 import { usePortfolio } from '../context/usePortfolio';
+import './Education.css';
 
 const Education = () => {
   const { data: { education: educationData } } = usePortfolio();
@@ -12,50 +13,47 @@ const Education = () => {
   };
 
   return (
-    <section id="education" className="py-24 scroll-mt-0">
+    <section id="education" className="education-section py-24 scroll-mt-0">
       <div className="container mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
+          transition={{ duration: 0.55 }}
+          className="max-w-6xl mx-auto"
         >
-          <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
-            <span className="text-brand-500">05.</span> Education
-            <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
-          </h2>
+          <div className="education-heading">
+            <div><span className="education-kicker">Learning / 05</span><h2 className="fluid-h2">Education<span>.</span></h2></div>
+            <p>A foundation built through study, hands-on practice, and continuous learning.</p>
+            <span className="education-count">{String(educationData.length).padStart(2, '0')} <span>milestones</span></span>
+          </div>
 
-          <div className="relative border-l border-border-primary ml-4 md:ml-6 space-y-12">
-            {educationData.map((item, idx) => (
+          <div className="education-grid">
+            {educationData.map((item, idx) => {
+              const EducationIcon = icons[item.icon] || Award;
+              return (
               <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="relative pl-10 md:pl-12"
+                key={`${item.degree}-${idx}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, delay: idx * 0.07 }}
+                className="education-card"
               >
-                <div className="absolute -left-5 top-0 bg-bg-primary border-2 border-brand-500 rounded-full p-1.5 shadow-[0_0_10px_rgba(14,165,233,0.5)]">
-                  {React.createElement(icons[item.icon] || Award, { className: 'text-brand-500', size: 24 })}
+                <div className="education-card-media">
+                  {item.image ? <img src={item.image} alt={`${item.institution} campus or credential`} loading="lazy" decoding="async" /> : <div className="education-card-placeholder"><EducationIcon size={34} /></div>}
+                  <span className="education-card-icon"><EducationIcon size={17} /></span>
+                  <span className="education-card-number">0{idx + 1}</span>
                 </div>
-
-                <div className="glass-card p-6 border-l-4 border-l-brand-500 flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-text-primary mb-1">{item.degree}</h3>
-                    <h4 className="text-lg text-text-secondary mb-2">{item.institution}</h4>
-                    <span className="inline-block px-3 py-1 bg-brand-500/10 text-brand-500 rounded-full text-sm font-mono">
-                      {item.period}
-                    </span>
-                  </div>
-                  {item.image && (
-                    <div className="w-full md:w-32 h-32 flex-shrink-0 rounded-lg overflow-hidden bg-glass-bg border border-border-primary flex items-center justify-center">
-                      <img src={item.image} alt={item.institution} loading="lazy" decoding="async" className="w-full h-full object-cover opacity-90" />
-                    </div>
-                  )}
+                <div className="education-card-content">
+                  <span className="education-period">{item.period}</span>
+                  <h3>{item.degree}</h3>
+                  <div className="education-institution"><span />{item.institution}</div>
+                  <div className="education-card-bottom"><span>EDUCATION & DEVELOPMENT</span><span>↗</span></div>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </motion.div>
       </div>

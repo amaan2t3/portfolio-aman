@@ -79,8 +79,12 @@ function AppRoutes() {
               </Routes>
             </Suspense>
           </main>
-          <footer className="glass mt-24 py-6 text-center text-text-secondary relative z-10">
-            <p>&copy; {new Date().getFullYear()} {data.profile.name}. All rights reserved.</p>
+          <footer className="site-footer relative z-10">
+            <div className="site-footer-inner">
+              <span className="site-footer-brand">{data.profile.brand}<span>.</span></span>
+              <p>&copy; {new Date().getFullYear()} {data.profile.name}. Crafted with care.</p>
+              <a href="#hero" onClick={(event) => { event.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to top ↑</a>
+            </div>
           </footer>
         </>
       )}

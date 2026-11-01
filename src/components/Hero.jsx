@@ -1,111 +1,119 @@
-import React, { useCallback, useMemo, useState, useEffect } from 'react';
-import { Mail, FileDown } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowDownRight, ArrowUpRight, CheckCircle2, FileDown, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { trackButtonClick, trackSocialClick, trackContactInitiate } from '../utils/analytics';
 import { usePortfolio } from '../context/usePortfolio';
+import './Hero.css';
 
 const Hero = () => {
-  const { data: { profile, contact } } = usePortfolio();
+  const { data } = usePortfolio();
+  const { profile, contact } = data;
   const roles = useMemo(() => profile.roles.length ? profile.roles : ['Developer'], [profile.roles]);
+  const backgroundImages = useMemo(() => {
+    const projectImages = data.projects.map((project) => project.image).filter(Boolean);
+    return [...new Set(projectImages)].slice(0, 5);
+  }, [data.projects]);
   const [roleIndex, setRoleIndex] = useState(0);
-  const [text, setText] = useState(roles[0]);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [delta, setDelta] = useState(150);
-
-  const tick = useCallback(() => {
-    let i = roleIndex % roles.length;
-    let fullText = roles[i];
-    let updatedText = isDeleting
-      ? fullText.substring(0, text.length - 1)
-      : fullText.substring(0, text.length + 1);
-
-    setText(updatedText);
-
-    if (isDeleting) {
-      setDelta(prevDelta => prevDelta / 1.5);
-    }
-
-    if (!isDeleting && updatedText === fullText) {
-      setIsDeleting(true);
-      setDelta(2000); // pause at the end
-    } else if (isDeleting && updatedText === '') {
-      setIsDeleting(false);
-      setRoleIndex(roleIndex + 1);
-      setDelta(150); // typing speed
-    }
-  }, [isDeleting, roles, roleIndex, text]);
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
 
   useEffect(() => {
-    const ticker = setInterval(tick, delta);
-    return () => clearInterval(ticker);
-  }, [delta, tick]);
+    const roleTimer = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % roles.length);
+    }, 3500);
+    return () => window.clearInterval(roleTimer);
+  }, [roles.length]);
+
+  useEffect(() => {
+    if (backgroundImages.length < 2) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const imageTimer = window.setInterval(() => {
+      setBackgroundIndex((current) => (current + 1) % backgroundImages.length);
+    }, 1000);
+    return () => window.clearInterval(imageTimer);
+  }, [backgroundImages.length]);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center pt-20">
-      <div className="container mx-auto px-6">
-        <div className="text-center w-full max-w-4xl mx-auto">
-          <p className="text-brand-500 font-semibold tracking-wider uppercase mb-4">
-            Welcome to my portfolio
-          </p>
+    <section className="hero-section" id="hero">
+      <div className="hero-backdrops" aria-hidden="true">
+        {backgroundImages.map((image, index) => (
+          <div
+            className={`hero-backdrop ${index === backgroundIndex ? 'is-visible' : ''}`}
+            key={image}
+            style={{ backgroundImage: `url("${image}")` }}
+          />
+        ))}
+      </div>
 
-          <h1 className="fluid-h1 font-extrabold mb-4 md:mb-6 tracking-tighter">
-            Hi, I'm <span className="hero-gradient-text">{profile.name}</span>
+      <div className="hero-content">
+        <div className="hero-copy">
+          <div className="hero-availability"><span className="hero-availability-dot" /> Open to new opportunities</div>
+          <p className="hero-eyebrow">Portfolio / 2026</p>
+          <h1 className="hero-title">
+            Building digital
+            <span>experiences that</span>
+            <span className="hero-title-accent">move people.</span>
           </h1>
-
-          <div className="fluid-h3 text-text-primary font-bold mb-8 min-h-[3rem] md:min-h-[4rem] tracking-tight">
-            <span>I'm a </span>
-            <span className="text-text-primary border-r-2 border-brand-500 pr-1 animate-pulse">{text}</span>
-          </div>
-
-          <p className="fluid-p text-text-secondary mb-10 max-w-2xl mx-auto px-2 md:px-0">
+          <p className="hero-intro">
+            I&apos;m <strong>{profile.name}</strong>, a <span key={roles[roleIndex]} className="hero-role">{roles[roleIndex]}</span>.{' '}
             {profile.intro}
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center items-center w-full gap-4 mb-12">
+          <div className="hero-actions">
             <Link
               to="/projects"
               onClick={() => trackButtonClick('hero_actions', 'View Projects')}
-              className="cursor-pointer w-full sm:w-auto flex justify-center bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-full font-medium transition-all shadow-lg hover:shadow-brand-500/50 box-glow"
+              className="hero-primary-action"
             >
-              View Projects
+              Explore my work <ArrowUpRight size={17} />
             </Link>
             <a
               href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackButtonClick('hero_actions', 'Download Resume')}
-              className="flex items-center justify-center w-full sm:w-auto gap-2 bg-glass-bg px-8 py-3 rounded-full text-text-primary font-semibold hover:border-brand-500 transition-colors border border-border-primary backdrop-blur-sm"
+              className="hero-secondary-action"
             >
-              <FileDown size={20} />
-              Resume
+              <FileDown size={17} /> Download resume
             </a>
           </div>
 
-          <div className="flex flex-col items-center justify-center gap-2 mb-16">
-            <div className="text-text-secondary font-mono text-sm flex items-center gap-2">
-              <span className="text-brand-500">▲</span> ~ {contact.email}
+          <div className="hero-bottom">
+            <a href={`mailto:${contact.email}`} onClick={() => trackContactInitiate('Hero Email Link')} className="hero-email">
+              <Mail size={15} /> {contact.email}
+            </a>
+            <div className="hero-socials" aria-label="Social profiles">
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" onClick={() => trackSocialClick('GitHub')}><FaGithub /></a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" onClick={() => trackSocialClick('LinkedIn')}><FaLinkedin /></a>
             </div>
           </div>
+        </div>
 
-          <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto pt-8 border-t border-border-primary">
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('GitHub')} className="flex flex-col items-center group cursor-pointer">
-              <FaGithub size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">{profile.githubCount}</span>
-              <span className="text-xs md:text-sm text-text-secondary text-center">GitHub Projects</span>
-            </a>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => trackSocialClick('LinkedIn')} className="flex flex-col items-center group cursor-pointer">
-              <FaLinkedin size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">{profile.linkedinCount}</span>
-              <span className="text-xs md:text-sm text-text-secondary text-center">LinkedIn Connections</span>
-            </a>
-            <a href={`mailto:${contact.email}`} onClick={() => trackContactInitiate('Hero Email Link')} className="flex flex-col items-center group cursor-pointer">
-              <Mail size={24} className="text-text-secondary mb-3 group-hover:text-brand-500 transition-colors" />
-              <span className="text-xl md:text-2xl font-bold text-text-primary mb-1 group-hover:text-brand-500 transition-colors">24×7</span>
-              <span className="text-xs md:text-sm text-text-secondary text-center">Email Me</span>
-            </a>
+        <div className="hero-visual">
+          <div className="hero-portrait-frame">
+            <img src={data.about.image} alt={profile.name} fetchPriority="high" decoding="async" />
+            <div className="hero-portrait-shade" />
+            <div className="hero-portrait-caption">
+              <span>Based in</span>
+              <strong>{contact.location}</strong>
+            </div>
+          </div>
+          <div className="hero-profile-card">
+            <CheckCircle2 size={17} />
+            <div><strong>Thoughtful by design.</strong><span>Built for people, made to last.</span></div>
+          </div>
+          <div className="hero-social-proof">
+            <div><strong>{profile.githubCount}</strong><span>Projects</span></div>
+            <div><strong>{profile.linkedinCount}</strong><span>Connections</span></div>
           </div>
         </div>
+      </div>
+
+      <div className="hero-scroll-hint"><ArrowDownRight size={15} /> Scroll to explore</div>
+      <div className="hero-image-indicator" aria-hidden="true">
+        {backgroundImages.map((image, index) => (
+          <span className={index === backgroundIndex ? 'is-active' : ''} key={image} />
+        ))}
       </div>
     </section>
   );

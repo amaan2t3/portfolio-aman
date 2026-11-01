@@ -1,23 +1,24 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, Monitor, Wrench } from 'lucide-react';
 import { usePortfolio } from '../context/usePortfolio';
+import './Skills.css';
 
 const SkillItem = ({ skill }) => (
   <motion.div
-    whileHover={{ y: -2 }}
-    className="bg-glass-bg border border-border-primary hover:border-brand-500/50 rounded-lg p-3 flex items-center gap-3 transition-colors"
+    whileHover={{ y: -3 }}
+    className="skill-item"
   >
-    <div className="w-5 h-5 flex items-center justify-center">
+    <div className="skill-item-icon">
       <img
         src={skill.icon}
         alt={skill.name}
         loading="lazy"
         decoding="async"
-        className={`max-w-full max-h-full object-contain ${skill.invert ? 'filter invert brightness-0' : ''}`}
+        className={`skill-icon-image ${skill.invert ? 'is-inverted' : ''}`}
       />
     </div>
-    <span className="text-sm font-medium text-text-primary whitespace-nowrap">{skill.name}</span>
+    <span className="skill-item-name">{skill.name}</span>
+    <span className="skill-item-arrow" aria-hidden="true">↗</span>
   </motion.div>
 );
 
@@ -26,13 +27,8 @@ const Skills = () => {
   const icons = { monitor: Monitor, code: Code, tools: Wrench };
 
   return (
-    <section id="skills" className="py-24 scroll-mt-0 relative overflow-hidden bg-bg-primary transition-colors duration-300">
+    <section id="skills" className="skills-section py-24 scroll-mt-0 relative overflow-hidden transition-colors duration-300">
       <div className="container mx-auto px-6 relative z-10">
-
-        <h2 className="fluid-h2 font-bold text-text-primary mb-12 flex items-center gap-4">
-          <span className="text-brand-500">02.</span> Technical Skills
-          <div className="h-[1px] bg-border-primary flex-grow ml-4"></div>
-        </h2>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -41,20 +37,42 @@ const Skills = () => {
           transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full">
-            {categories.map((category, idx) => (
-              <div key={idx} className="bg-glass-bg border border-border-primary backdrop-blur-md rounded-2xl p-6 flex flex-col h-full">
-                <h3 className="text-lg font-semibold text-text-primary mb-6 flex items-center gap-3">
-                   {React.createElement(icons[category.icon] || Code, { size: 20, className: 'text-brand-500' })}
-                   {category.title}
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {category.skills.map((skill, i) => (
-                    <SkillItem key={i} skill={skill} />
-                  ))}
-                </div>
-              </div>
-            ))}
+          <div className="skills-heading">
+            <div><span className="skills-kicker">Capabilities / Toolkit</span><h2 className="fluid-h2">Technical skills<span>.</span></h2></div>
+            <p>The tools I use to turn ideas into reliable, intuitive digital products.</p>
+            <span className="skills-category-count">{String(categories.length).padStart(2, '0')} <span>focus areas</span></span>
+          </div>
+
+          <div className="skills-grid">
+            {categories.map((category, idx) => {
+              const CategoryIcon = icons[category.icon] || Code;
+              return (
+                <motion.article
+                  key={category.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: idx * 0.08 }}
+                  className="skill-category-card"
+                >
+                  <header className="skill-category-header">
+                    <span className="skill-category-icon"><CategoryIcon size={20} /></span>
+                    <div className="skill-category-heading">
+                      <span className="skill-category-index">0{idx + 1} / AREA</span>
+                      <h3>{category.title}</h3>
+                    </div>
+                    <span className="skill-category-total">{String(category.skills.length).padStart(2, '0')}</span>
+                  </header>
+                  <div className="skill-category-divider" />
+                  <div className="skill-items-grid">
+                    {category.skills.map((skill, i) => <SkillItem key={`${skill.name}-${i}`} skill={skill} />)}
+                  </div>
+                  <footer className="skill-category-footer">
+                    <span>TOOLS & TECHNOLOGIES</span><span className="skill-category-footer-mark">✳</span>
+                  </footer>
+                </motion.article>
+              );
+            })}
           </div>
         </motion.div>
       </div>

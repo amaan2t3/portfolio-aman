@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X, Search, Sun, Moon } from 'lucide-react';
 import { ThemeContext } from '../context/ThemeContext';
 import { usePortfolio } from '../context/usePortfolio';
+import './Navbar.css';
 
 const NAV_LINKS = [
   { name: 'Home', to: '/' },
@@ -64,16 +65,16 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4' : 'bg-transparent py-6'}`}
+      className={`portfolio-nav fixed w-full z-50 transition-all duration-300 ${scrolled ? 'is-scrolled glass py-3' : 'portfolio-nav-top bg-transparent py-5'}`}
     >
-      <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="portfolio-nav-inner container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-12">
           <NavLink to="/" className="text-xl md:text-2xl font-bold text-text-primary tracking-tighter flex items-center gap-1 md:gap-2">
             <span className="font-mono text-brand-500">{"</>"}</span> {profile.brand}<span className="text-brand-500 font-bold">{"."}</span>
           </NavLink>
 
           {/* Desktop Search Bar */}
-          <div className="hidden md:block relative">
+          <div className="hidden xl:block relative">
             <div className="flex items-center bg-bg-secondary rounded-lg px-3 py-1.5 border border-border-primary focus-within:border-brand-500 transition-colors">
               <Search size={16} className="text-slate-400 mr-2" />
               <input
@@ -113,13 +114,13 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-2">
-          <div className="flex space-x-2">
+        <div className="portfolio-nav-desktop hidden md:flex items-center space-x-2">
+          <div className="portfolio-nav-links flex space-x-2">
             {NAV_LINKS.map((link) => (
               <NavLink
                 key={link.name}
                 to={link.to}
-                className={({ isActive }) => `cursor-pointer transition-colors px-3 py-1.5 rounded-lg font-medium ${isActive ? 'bg-glass-bg backdrop-blur-sm text-brand-500' : 'text-text-secondary hover:text-brand-500'}`}
+                className={({ isActive }) => `portfolio-nav-link cursor-pointer transition-colors px-3 py-1.5 rounded-lg font-medium ${isActive ? 'is-active bg-glass-bg backdrop-blur-sm text-brand-500' : 'text-text-secondary hover:text-brand-500'}`}
               >
                 {link.name}
               </NavLink>
