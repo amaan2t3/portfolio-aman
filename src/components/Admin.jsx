@@ -6,6 +6,7 @@ import {
   Wrench, FolderKanban, Award, LoaderCircle,
 } from 'lucide-react';
 import { usePortfolio } from '../context/usePortfolio';
+import { readApiJson } from '../lib/api';
 import './Admin.css';
 
 const SECTIONS = [
@@ -357,12 +358,15 @@ function AdminLogin({ error, onError, onAuthenticated }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      const result = await response.json();
+      const result = await readApiJson(response);
       if (!response.ok) onError(result.error || 'Unable to sign in.');
       else onAuthenticated(result.email);
     } catch (signInError) {
       console.error('Unable to sign in to portfolio admin:', signInError);
-      onError(`Sign in failed: ${signInError.message}. Make sure the API server is running.`);
+      const isConnectionError = signInError instanceof TypeError;
+      onError(isConnectionError
+        ? `Sign in failed: ${signInError.message}. Make sure the API server is running.`
+        : signInError.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -375,7 +379,7 @@ function AdminLogin({ error, onError, onAuthenticated }) {
         <div className="admin-login-icon"><ShieldCheck size={24} /></div>
         <span className="admin-eyebrow">PORTFOLIO MANAGEMENT</span>
         <h1>Admin sign in</h1>
-        <p>Sign in with an email account that has been granted portfolio administrator access.</p>
+        <p>Use the single admin email and password configured for this deployment.</p>
         <label className="admin-field"><span>Email</span><input type="email" autoComplete="username" value={email} onChange={(event) => setEmail(event.target.value)} required /></label>
         <label className="admin-field"><span>Password</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required /></label>
         {error && <p className="admin-error" role="alert">{error}</p>}
@@ -399,7 +403,7 @@ function Admin() {
     const checkSession = async () => {
       try {
         const response = await fetch('/api/auth/session', { credentials: 'same-origin' });
-        const result = await response.json();
+        const result = await readApiJson(response);
         if (!active) return;
         if (!response.ok) throw new Error(result.error || 'Could not check the login session.');
         if (!result.configured) {

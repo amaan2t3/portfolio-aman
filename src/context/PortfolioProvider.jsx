@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { initialPortfolioData } from '../data/portfolioData';
+import { readApiJson } from '../lib/api';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { PortfolioContext } from './portfolioContext';
 
@@ -41,7 +42,7 @@ export function PortfolioProvider({ children }) {
       body: JSON.stringify(nextData),
     });
 
-    const result = await response.json();
+    const result = await readApiJson(response);
     if (!response.ok) {
       const error = new Error(result.error || 'Unable to save portfolio content.');
       setStorageError(error.message);
