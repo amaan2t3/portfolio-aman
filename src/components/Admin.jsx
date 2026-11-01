@@ -515,7 +515,7 @@ function AdminDashboard({ session, onSignedOut }) {
           <div><span className="admin-eyebrow">PORTFOLIO MANAGEMENT</span><h1>{selectedSection.label}</h1></div>
           <div className="admin-topbar-right">
             <span className="admin-save-status"><span className="admin-status-dot" /> Supabase secured</span>
-            <span className="admin-user-email">{session.user.email}</span>
+            <span className="admin-user-email">{session.email}</span>
             <button type="button" className="admin-button admin-button-quiet admin-signout-button" onClick={handleSignOut}><LogOut size={15} /> Sign out</button>
             <Link to="/" className="admin-button admin-button-quiet admin-view-button"><ArrowLeft size={15} /> View site</Link>
           </div>

@@ -20,5 +20,5 @@ The `/admin` portal uses one server-side `ADMIN_EMAIL` and `ADMIN_PASSWORD`. The
 1. Copy `.env.example` to `.env` locally and set `ADMIN_EMAIL`, a unique `ADMIN_PASSWORD` of at least 12 characters, and a random `ADMIN_SESSION_SECRET` of at least 32 characters.
 2. Set `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and the server-only `SUPABASE_SERVICE_ROLE_KEY` from the Supabase project. Never prefix the service-role key or admin credentials with `VITE_`.
 3. Run [`supabase/setup.sql`](./supabase/setup.sql) in the Supabase SQL editor.
-4. For local development, run `npm run dev:api` and `npm run dev` in separate terminals.
+4. Run `npm run dev`; the local API runs in the Vite process, so no second terminal or API port is needed.
 5. For Vercel, add all six values from `.env.example` under Project Settings → Environment Variables, keeping admin credentials and the service-role key server-only. Redeploy after setting them. The API routes in [`api/`](./api) are deployed as Vercel serverless functions.
