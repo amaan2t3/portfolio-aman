@@ -40,7 +40,7 @@ const Education = () => {
                 transition={{ duration: 0.45, delay: idx * 0.07 }}
                 className="education-card"
               >
-                <div className="education-card-media">
+                <div className={`education-card-media ${item.institution === 'Cisco Networking Academy' ? 'education-card-media-logo' : ''}`}>
                   {item.image ? <img src={item.image} alt={`${item.institution} campus or credential`} loading="lazy" decoding="async" /> : <div className="education-card-placeholder"><EducationIcon size={34} /></div>}
                   <span className="education-card-icon"><EducationIcon size={17} /></span>
                   <span className="education-card-number">0{idx + 1}</span>

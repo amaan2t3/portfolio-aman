@@ -13,20 +13,20 @@
 .portfolio-nav-link.is-active { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-brand-500) 16%, transparent); }
 .portfolio-nav a:focus-visible,
 .portfolio-nav button:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 3px; }
-.portfolio-nav-top .text-text-primary { color: #17241c; }
+.portfolio-nav-top .text-text-primary { color: var(--text-primary); }
 .portfolio-nav-top .text-text-secondary,
-.portfolio-nav-top .portfolio-nav-link { color: #52635a; }
+.portfolio-nav-top .portfolio-nav-link { color: var(--text-secondary); }
 .portfolio-nav-top .portfolio-nav-link:hover,
-.portfolio-nav-top .portfolio-nav-link.is-active { color: #147c58; }
-.portfolio-nav-top .portfolio-nav-link.is-active { background: #e8f3eb; }
-.portfolio-nav-top .portfolio-nav-desktop > a { color: #52635a; }
-.portfolio-nav-top .portfolio-nav-desktop > a:hover { color: #147c58; }
+.portfolio-nav-top .portfolio-nav-link.is-active { color: var(--palette-primary); }
+.portfolio-nav-top .portfolio-nav-link.is-active { background: var(--palette-soft-green); }
+.portfolio-nav-top .portfolio-nav-desktop > a { color: var(--text-secondary); }
+.portfolio-nav-top .portfolio-nav-desktop > a:hover { color: var(--palette-primary); }
 .portfolio-nav-top .portfolio-nav-inner > div:first-child > div > div:first-child {
-  border-color: #dce4de;
-  background: rgb(255 255 255 / 78%);
+  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--palette-card) 82%, transparent);
 }
-.portfolio-nav-top input { color: #26372c; }
-.portfolio-nav-top input::placeholder { color: #738178; }
+.portfolio-nav-top input { color: var(--text-primary); }
+.portfolio-nav-top input::placeholder { color: var(--text-secondary); }
 
 @media (min-width: 768px) and (max-width: 1100px) {
   .portfolio-nav-inner { padding-inline: 18px; }

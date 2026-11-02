@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowDownRight, ArrowUpRight, CheckCircle2, FileDown, Mail } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, CheckCircle2, FileDown, Mail } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { trackButtonClick, trackSocialClick, trackContactInitiate } from '../utils/analytics';
@@ -10,53 +10,34 @@ const Hero = () => {
   const { data } = usePortfolio();
   const { profile, contact } = data;
   const roles = useMemo(() => profile.roles.length ? profile.roles : ['Developer'], [profile.roles]);
-  const backgroundImages = useMemo(() => {
-    const projectImages = data.projects.map((project) => project.image).filter(Boolean);
-    return [...new Set(projectImages)].slice(0, 5);
-  }, [data.projects]);
   const [roleIndex, setRoleIndex] = useState(0);
-  const [backgroundIndex, setBackgroundIndex] = useState(0);
 
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const roleTimer = window.setInterval(() => {
       setRoleIndex((current) => (current + 1) % roles.length);
-    }, 3500);
+    }, 4500);
     return () => window.clearInterval(roleTimer);
   }, [roles.length]);
 
-  useEffect(() => {
-    if (backgroundImages.length < 2) return undefined;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    const imageTimer = window.setInterval(() => {
-      setBackgroundIndex((current) => (current + 1) % backgroundImages.length);
-    }, 1000);
-    return () => window.clearInterval(imageTimer);
-  }, [backgroundImages.length]);
-
   return (
     <section className="hero-section" id="hero">
-      <div className="hero-backdrops" aria-hidden="true">
-        {backgroundImages.map((image, index) => (
-          <div
-            className={`hero-backdrop ${index === backgroundIndex ? 'is-visible' : ''}`}
-            key={image}
-            style={{ backgroundImage: `url("${image}")` }}
-          />
-        ))}
-      </div>
-
       <div className="hero-content">
         <div className="hero-copy">
-          <div className="hero-availability"><span className="hero-availability-dot" /> Open to new opportunities</div>
-          <p className="hero-eyebrow">Portfolio / 2026</p>
+          <div className="hero-kicker">
+            <span className="hero-kicker-mark"><CheckCircle2 size={15} /></span>
+            <span>Full-stack developer / Portfolio 2026</span>
+          </div>
+
           <h1 className="hero-title">
-            Building digital
-            <span>experiences that</span>
+            <span className="hero-title-strong">Building digital</span>
+            <span className="hero-title-serif">experiences that</span>
             <span className="hero-title-accent">move people.</span>
           </h1>
+
           <p className="hero-intro">
-            I&apos;m <strong>{profile.name}</strong>, a <span key={roles[roleIndex]} className="hero-role">{roles[roleIndex]}</span>.{' '}
-            {profile.intro}
+            I&apos;m <strong>{profile.name}</strong>, a <span key={roles[roleIndex]} className="hero-role">{roles[roleIndex]}</span>.
+            {' '}{profile.intro}
           </p>
 
           <div className="hero-actions">
@@ -67,18 +48,25 @@ const Hero = () => {
             >
               Explore my work <ArrowUpRight size={17} />
             </Link>
+            <Link
+              to="/about"
+              onClick={() => trackButtonClick('hero_actions', 'About Me')}
+              className="hero-secondary-action"
+            >
+              About me
+            </Link>
+          </div>
+
+          <div className="hero-bottom">
             <a
               href={profile.resume}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackButtonClick('hero_actions', 'Download Resume')}
-              className="hero-secondary-action"
+              className="hero-resume-link"
             >
-              <FileDown size={17} /> Download resume
+              <FileDown size={15} /> Download resume
             </a>
-          </div>
-
-          <div className="hero-bottom">
             <a href={`mailto:${contact.email}`} onClick={() => trackContactInitiate('Hero Email Link')} className="hero-email">
               <Mail size={15} /> {contact.email}
             </a>
@@ -90,6 +78,7 @@ const Hero = () => {
         </div>
 
         <div className="hero-visual">
+          <div className="hero-portrait-backplate" />
           <div className="hero-portrait-frame">
             <img src={data.about.image} alt={profile.name} fetchPriority="high" decoding="async" />
             <div className="hero-portrait-shade" />
@@ -99,22 +88,22 @@ const Hero = () => {
             </div>
           </div>
           <div className="hero-profile-card">
-            <CheckCircle2 size={17} />
-            <div><strong>Thoughtful by design.</strong><span>Built for people, made to last.</span></div>
+            <span className="hero-profile-card-icon"><CheckCircle2 size={17} /></span>
+            <div>
+              <strong>Thoughtful by design.</strong>
+              <span>Built for people, made to last.</span>
+            </div>
           </div>
-          <div className="hero-social-proof">
-            <div><strong>{profile.githubCount}</strong><span>Projects</span></div>
-            <div><strong>{profile.linkedinCount}</strong><span>Connections</span></div>
+          <div className="hero-photo-note">
+            <span>MY APPROACH</span>
+            <strong>Good ideas, carefully built.</strong>
           </div>
         </div>
       </div>
 
-      <div className="hero-scroll-hint"><ArrowDownRight size={15} /> Scroll to explore</div>
-      <div className="hero-image-indicator" aria-hidden="true">
-        {backgroundImages.map((image, index) => (
-          <span className={index === backgroundIndex ? 'is-active' : ''} key={image} />
-        ))}
-      </div>
+      <a className="hero-scroll-hint" href="#about" aria-label="Scroll to about section">
+        <span>Scroll to explore</span><ArrowDown size={15} />
+      </a>
     </section>
   );
 };

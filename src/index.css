@@ -1,9 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-500: #10B981;
-  --color-brand-600: #059669;
-  --color-brand-glow: rgba(16, 185, 129, 0.5);
+  --color-brand-500: var(--palette-primary);
+  --color-brand-600: var(--palette-primary-hover);
+  --color-brand-soft: var(--palette-soft-green);
+  --color-brand-glow: rgba(38, 115, 77, 0.28);
   
   --color-bg-primary: var(--bg-primary);
   --color-bg-secondary: var(--bg-secondary);
@@ -18,29 +19,44 @@
 
 @layer base {
   :root {
-    --bg-primary: #F8FAFC;
-    --bg-secondary: #F1F5F9;
-    --text-primary: #0F172A;
-    --text-secondary: #475569;
-    --border-color: #E2E8F0;
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.05);
-    --mesh-bg-base: #F8FAFC;
-    --mesh-glow: rgba(16, 185, 129, 0.05);
-    --mesh-glow-alt: rgba(99, 102, 241, 0.03);
+    --font-family-sans: 'Inter', 'Space Grotesk', sans-serif;
+    --type-display-title: clamp(3rem, 6vw, 5rem);
+    --type-section-title: clamp(2.4rem, 5vw, 4rem);
+    --type-section-description: 15px;
+    --type-body: 14px;
+    --palette-bg: #FAFAF7;
+    --palette-primary: #26734D;
+    --palette-primary-hover: #205E40;
+    --palette-text: #202820;
+    --palette-soft-green: #E8F2EB;
+    --palette-card: #FFFFFF;
+    --palette-muted: #737B73;
+    --bg-primary: var(--palette-bg);
+    --bg-secondary: var(--palette-soft-green);
+    --text-primary: var(--palette-text);
+    --text-secondary: var(--palette-muted);
+    --border-color: color-mix(in srgb, var(--palette-muted) 20%, var(--palette-card));
+    --glass-bg: color-mix(in srgb, var(--palette-card) 86%, transparent);
+    --glass-border: color-mix(in srgb, var(--palette-muted) 14%, transparent);
+    --mesh-bg-base: var(--palette-bg);
+    --mesh-glow: rgba(38, 115, 77, 0.05);
+    --mesh-glow-alt: rgba(38, 115, 77, 0.025);
   }
 
   .dark {
-    --bg-primary: #0A0E17;
-    --bg-secondary: #0F172A;
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
-    --border-color: rgba(255, 255, 255, 0.05);
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --mesh-bg-base: #0A0E17;
-    --mesh-glow: rgba(20, 184, 166, 0.1);
-    --mesh-glow-alt: rgba(99, 102, 241, 0.05);
+    --palette-bg: #17211a;
+    --palette-primary: #78b58b;
+    --palette-primary-hover: #94c9a4;
+    --palette-text: #f5f7f3;
+    --palette-soft-green: #243229;
+    --palette-card: #202b23;
+    --palette-muted: #b2bdb2;
+    --border-color: color-mix(in srgb, var(--palette-muted) 18%, transparent);
+    --glass-bg: color-mix(in srgb, var(--palette-card) 88%, transparent);
+    --glass-border: color-mix(in srgb, var(--palette-muted) 16%, transparent);
+    --mesh-bg-base: var(--palette-bg);
+    --mesh-glow: rgba(38, 115, 77, 0.16);
+    --mesh-glow-alt: rgba(38, 115, 77, 0.08);
   }
 
   body {
@@ -57,7 +73,8 @@
   }
   
   .glass-card {
-    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-2xl hover:border-[#10B981] transition-all duration-300;
+    @apply bg-glass-bg backdrop-blur-sm border border-glass-border rounded-2xl transition-all duration-300;
+    &:hover { border-color: var(--palette-primary); }
   }
 
   .text-glow {
@@ -69,7 +86,7 @@
   }
 
   .hero-gradient-text {
-    background: linear-gradient(135deg, #10B981 0%, #14B8A6 50%, #6366F1 100%);
+    background: linear-gradient(135deg, var(--palette-primary) 0%, #4a8a66 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -78,21 +95,34 @@
   
   /* Fluid Typography Utilities */
   .fluid-h1 {
-    font-size: clamp(2.5rem, 5vw + 1rem, 6rem);
+    font-size: var(--type-display-title);
     line-height: 1.1;
   }
   .fluid-h2 {
-    font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
-    line-height: 1.2;
+    font-size: var(--type-section-title);
+    font-weight: 700;
+    letter-spacing: -.065em;
+    line-height: 1.08;
   }
   .fluid-h3 {
     font-size: clamp(1.25rem, 2.5vw + 1rem, 2rem);
     line-height: 1.3;
   }
   .fluid-p {
-    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.125rem);
+    font-size: var(--type-section-description);
     line-height: 1.6;
   }
+}
+
+main {
+  font-family: var(--font-family-sans);
+}
+
+main h1,
+main h2,
+main h3,
+main h4 {
+  font-family: var(--font-family-sans);
 }
 
 /* Glowing Mesh Background */
@@ -128,10 +158,10 @@
   padding: 18px 28px;
 }
 .site-footer-brand { color: var(--text-primary); font-size: 18px; font-weight: 750; letter-spacing: -.06em; }
-.site-footer-brand span { color: #10b981; }
+.site-footer-brand span { color: var(--palette-primary); }
 .site-footer-inner p { margin: 0; color: var(--text-secondary); font-size: 11px; }
 .site-footer-inner a { color: var(--text-secondary); font-size: 11px; text-decoration: none; }
-.site-footer-inner a:hover { color: #059669; }
+.site-footer-inner a:hover { color: var(--palette-primary); }
 
 @media (max-width: 600px) {
   .site-footer-inner { flex-wrap: wrap; justify-content: space-between; padding-inline: 20px; }
